@@ -3,11 +3,11 @@
 $images = array(
 	'gang' => array(
 		'name' => 'Gang',
-		'url' => 'http://anon:anon@192.168.1.15/snapshot.cgi',
+		'url' => 'http://192.168.1.15/snapshot.cgi?user=anon&pwd=anon',
 	),
 	'garage' => array(
 		'name' => 'Garage',
-		'url' => 'http://anon:anon@192.168.1.16/snapshot.cgi',
+		'url' => 'http://192.168.1.16/snapshot.cgi?user=anon&pwd=anon',
 	),
 );
 
