@@ -22,6 +22,8 @@ if (!empty($_GET['image']) && isset($images[$_GET['image']])) {
     exit;
 }
 
+echo '<style type="text/css">html, body { margin: 0; padding: 0; }</style>';
+
 foreach ($images as $id => $image) {
     $url = $_SERVER['PHP_SELF'] . '?image=' . $id . '&t=' . time();
     echo '<p><img src="' . $url . '" name="' . $image['name'] . '" style="width: 100%" /></p>';
