@@ -22,7 +22,7 @@ if (!empty($_GET['image']) && isset($images[$_GET['image']])) {
     exit;
 }
 
-echo '<style type="text/css">html, body { margin: 0; padding: 0; }</style>';
+echo '<style type="text/css">html, body, p, img { margin: 0; padding: 0; }</style>';
 
 foreach ($images as $id => $image) {
     $url = $_SERVER['PHP_SELF'] . '?image=' . $id . '&t=' . time();
