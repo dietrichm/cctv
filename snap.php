@@ -16,15 +16,34 @@ if (!empty($_GET['image']) && isset($images[$_GET['image']])) {
     header('Content-Type: image/jpeg');
 
     $c = curl_init($url);
-    curl_exec($c);
+    curl_setopt($c, CURLOPT_TIMEOUT, 2);
+    $success = curl_exec($c);
     curl_close($c);
+
+    if (!$success) {
+        readfile('./offline.jpg');
+    }
 
     exit;
 }
 
-echo '<style type="text/css">html, body, p, img { margin: 0; padding: 0; }</style>';
+echo <<<EOT
+<style type="text/css">
+html, body, p, img {
+    margin: 0; padding: 0;
+}
+img {
+    width: 100%;
+}
+@media screen and (min-device-width: 800px) {
+    img {
+        width: 50%;
+    }
+}
+</style>
+EOT;
 
 foreach ($images as $id => $image) {
     $url = $_SERVER['PHP_SELF'] . '?image=' . $id . '&t=' . time();
-    echo '<p><img src="' . $url . '" name="' . $image['name'] . '" style="width: 100%" /></p>';
+    echo '<img src="' . $url . '" name="' . $image['name'] . '" />';
 }
