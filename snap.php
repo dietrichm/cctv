@@ -44,6 +44,6 @@ img {
 EOT;
 
 foreach ($images as $id => $image) {
-    $url = $_SERVER['PHP_SELF'] . '?image=' . $id . '&t=' . time();
+    $url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '?image=' . $id . '&t=' . time();
     echo '<img src="' . $url . '" name="' . $image['name'] . '" />';
 }
