@@ -1,4 +1,4 @@
-.PHONY: build up
+.PHONY: build up composer
 
 default: up
 
@@ -7,3 +7,6 @@ build:
 
 up:
 	docker-compose up -d
+
+composer:
+	docker run --rm --interactive --tty --volume $(PWD):/app composer $(filter-out $@,$(MAKECMDGOALS))
