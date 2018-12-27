@@ -1,4 +1,4 @@
-.PHONY: build up composer install
+.PHONY: build up composer install test
 
 default: up
 
@@ -13,6 +13,9 @@ composer:
 
 install: composer.json composer.lock
 	docker run --rm --interactive --tty --volume $(PWD):/app composer install
+
+test:
+	docker-compose run cctv vendor/bin/phpunit $(filter-out $@,$(MAKECMDGOALS))
 
 %:
 	@:
