@@ -5,7 +5,7 @@ default: up
 build:
 	docker-compose build
 
-up:
+up: install
 	docker-compose up -d
 
 composer:
