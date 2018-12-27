@@ -1,9 +1,7 @@
 <?php
 
-use League\Container\Container;
-use League\Container\ReflectionContainer;
+use Jenssegers\Lean\App;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$container = new Container();
-$container->delegate(new ReflectionContainer());
+$app = new App();
