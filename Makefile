@@ -1,4 +1,4 @@
-.PHONY: build up composer
+.PHONY: build up composer install
 
 default: up
 
