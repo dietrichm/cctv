@@ -21,7 +21,7 @@ if (!empty($_GET['image']) && isset($images[$_GET['image']])) {
     curl_close($c);
 
     if (!$success) {
-        readfile('./offline.jpg');
+        readfile('./images/offline.jpg');
     }
 
     exit;
