@@ -3,7 +3,7 @@
 default: up
 
 build:
-	docker build -t cctv .
+	docker-compose build
 
 up:
-	docker run -it --rm -p 80:80 cctv
+	docker-compose up -d
