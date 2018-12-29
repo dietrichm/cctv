@@ -46,8 +46,12 @@ final class InMemoryCameraRepositoryTest extends TestCase
      */
     public function itReturnsAllCameras()
     {
-        $cameras = $this->repository->findAll();
-
-        $this->assertEquals([], $cameras);
+        $this->assertEquals(
+            [
+                $this->cameraOne,
+                $this->cameraTwo,
+            ],
+            $this->repository->findAll()
+        );
     }
 }
