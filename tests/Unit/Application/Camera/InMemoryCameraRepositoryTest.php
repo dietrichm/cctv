@@ -4,6 +4,7 @@ namespace Detroit\Cctv\Tests\Unit\Application\Camera;
 
 use Detroit\Cctv\Application\Camera\InMemoryCameraRepository;
 use Detroit\Cctv\Domain\Camera\Camera;
+use Detroit\Cctv\Domain\Camera\CameraNotFound;
 use League\Uri\Uri;
 use PHPUnit\Framework\TestCase;
 
@@ -64,5 +65,15 @@ final class InMemoryCameraRepositoryTest extends TestCase
             $this->cameraOne,
             $this->repository->findByName('foo')
         );
+    }
+
+    /**
+     * @test
+     */
+    public function itThrowsExceptionWhenCameraDoesNotExist()
+    {
+        $this->expectExceptionObject(CameraNotFound::withName('nonexistant'));
+
+        $this->repository->findByName('nonexistant');
     }
 }
