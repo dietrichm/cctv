@@ -24,6 +24,11 @@ final class Camera
         $this->snapshotUri = $snapshotUri;
     }
 
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
     public function getSnapshotUri(): Uri
     {
         return $this->snapshotUri;

@@ -10,18 +10,25 @@ class InMemoryCameraRepository implements CameraRepository
     /**
      * @var Camera[]
      */
-    private $cameras;
+    private $cameras = [];
 
     /**
      * @param Camera[] $cameras
      */
     public function __construct(array $cameras)
     {
-        $this->cameras = $cameras;
+        foreach ($cameras as $camera) {
+            $this->addCamera($camera);
+        }
+    }
+
+    private function addCamera(Camera $camera): void
+    {
+        $this->cameras[$camera->getName()] = $camera;
     }
 
     public function findAll(): array
     {
-        return $this->cameras;
+        return array_values($this->cameras);
     }
 }
