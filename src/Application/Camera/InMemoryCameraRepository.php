@@ -3,6 +3,7 @@
 namespace Detroit\Cctv\Application\Camera;
 
 use Detroit\Cctv\Domain\Camera\Camera;
+use Detroit\Cctv\Domain\Camera\CameraNotFound;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
 
 class InMemoryCameraRepository implements CameraRepository
@@ -34,6 +35,10 @@ class InMemoryCameraRepository implements CameraRepository
 
     public function findByName(string $name): Camera
     {
+        if (!array_key_exists($name, $this->cameras)) {
+            throw CameraNotFound::withName($name);
+        }
+
         return $this->cameras[$name];
     }
 }
