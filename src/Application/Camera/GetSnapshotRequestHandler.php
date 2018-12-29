@@ -20,8 +20,11 @@ final class GetSnapshotRequestHandler
 
     public function __invoke(
         ServerRequestInterface $request,
-        ResponseInterface $response
+        ResponseInterface $response,
+        array $arguments
     ): ResponseInterface {
+        $camera = $this->cameraRepository->findByName($arguments['cameraName']);
+
         return $response;
     }
 }
