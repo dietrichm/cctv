@@ -21,11 +21,11 @@ final class CameraServiceProvider extends AbstractServiceProvider
         $this->getContainer()->share(CameraRepository::class, function () {
             return new InMemoryCameraRepository([
                 new Camera(
-                    'Gang',
+                    'gang',
                     Uri::createFromString('http://192.168.1.15/snapshot.cgi?user=anon&pwd=anon')
                 ),
                 new Camera(
-                    'Garage',
+                    'garage',
                     Uri::createFromString('http://192.168.1.16/snapshot.cgi?user=anon&pwd=anon')
                 ),
             ]);
