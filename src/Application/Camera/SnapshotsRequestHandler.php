@@ -24,7 +24,7 @@ final class SnapshotsRequestHandler
         ResponseInterface $response
     ): ResponseInterface {
         $output = implode('', array_map(function (Camera $camera) {
-            return '';
+            return '<img src="' . $camera->getSnapshotUri() . '">';
         }, $this->cameraRepository->findAll()));
 
         $response->getBody()->write($output);
