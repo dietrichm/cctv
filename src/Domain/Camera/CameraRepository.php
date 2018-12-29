@@ -8,4 +8,6 @@ interface CameraRepository
      * @return Camera[]
      */
     public function findAll(): array;
+
+    public function findByName(string $name): Camera;
 }

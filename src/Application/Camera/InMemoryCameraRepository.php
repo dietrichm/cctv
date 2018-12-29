@@ -31,4 +31,9 @@ class InMemoryCameraRepository implements CameraRepository
     {
         return array_values($this->cameras);
     }
+
+    public function findByName(string $name): Camera
+    {
+        return $this->cameras[$name];
+    }
 }
