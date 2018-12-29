@@ -21,12 +21,19 @@ final class GetSnapshotRequestHandler
      */
     private $httpClient;
 
+    /**
+     * @var string
+     */
+    private $offlineImagePath;
+
     public function __construct(
         CameraRepository $cameraRepository,
-        Client $httpClient
+        Client $httpClient,
+        string $offlineImagePath
     ) {
         $this->cameraRepository = $cameraRepository;
         $this->httpClient = $httpClient;
+        $this->offlineImagePath = $offlineImagePath;
     }
 
     public function __invoke(

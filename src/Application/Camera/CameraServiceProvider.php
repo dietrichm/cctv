@@ -4,6 +4,7 @@ namespace Detroit\Cctv\Application\Camera;
 
 use Detroit\Cctv\Domain\Camera\Camera;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
+use GuzzleHttp\Client;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Uri\Uri;
 
@@ -14,6 +15,7 @@ final class CameraServiceProvider extends AbstractServiceProvider
      */
     protected $provides = [
         CameraRepository::class,
+        GetSnapshotRequestHandler::class,
     ];
 
     public function register(): void
@@ -29,6 +31,14 @@ final class CameraServiceProvider extends AbstractServiceProvider
                     Uri::createFromString('http://192.168.1.16/snapshot.cgi?user=anon&pwd=anon')
                 ),
             ]);
+        });
+
+        $this->getContainer()->share(GetSnapshotRequestHandler::class, function () {
+            return new GetSnapshotRequestHandler(
+                $this->getContainer()->get(CameraRepository::class),
+                $this->getContainer()->get(Client::class),
+                'images/offline.jpg'
+            );
         });
     }
 }
