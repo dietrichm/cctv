@@ -39,6 +39,19 @@ final class SnapshotsRequestHandlerTest extends TestCase
      */
     public function itRendersSnapshotsForAllCameras()
     {
+        $this->cameraRepository->expects($this->once())
+            ->method('findAll')
+            ->willReturn([
+                new Camera(
+                    'foo',
+                    Uri::createFromString('http://example.org/foo')
+                ),
+                new Camera(
+                    'bar',
+                    Uri::createFromString('http://example.org/bar')
+                ),
+            ]);
+
         $response = $this->handler->__invoke(
             $this->createRequest(),
             new Response()
