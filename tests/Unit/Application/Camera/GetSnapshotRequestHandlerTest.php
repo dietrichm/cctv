@@ -33,14 +33,21 @@ final class GetSnapshotRequestHandlerTest extends TestCase
      */
     private $httpClient;
 
+    /**
+     * @var string
+     */
+    private $offlineImagePath;
+
     public function setUp()
     {
         $this->cameraRepository = $this->createMock(CameraRepository::class);
         $this->httpClient = $this->createMock(Client::class);
+        $this->offlineImagePath = 'public/images/offline.jpg';
 
         $this->handler = new GetSnapshotRequestHandler(
             $this->cameraRepository,
-            $this->httpClient
+            $this->httpClient,
+            $this->offlineImagePath
         );
     }
 
