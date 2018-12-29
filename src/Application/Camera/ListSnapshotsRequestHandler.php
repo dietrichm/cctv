@@ -24,7 +24,7 @@ final class ListSnapshotsRequestHandler
         ResponseInterface $response
     ): ResponseInterface {
         $output = implode('', array_map(function (Camera $camera) {
-            return '<img src="' . $camera->getSnapshotUri() . '">';
+            return '<img src="/snapshot/' . $camera->getName() . '">';
         }, $this->cameraRepository->findAll()));
 
         $response->getBody()->write($output);
