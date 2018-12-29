@@ -58,7 +58,7 @@ final class ListSnapshotsRequestHandlerTest extends TestCase
         );
 
         $this->assertEquals(
-            '<img src="http://example.org/foo"><img src="http://example.org/bar">',
+            '<img src="/snapshot/foo"><img src="/snapshot/bar">',
             (string) $response->getBody()
         );
     }
