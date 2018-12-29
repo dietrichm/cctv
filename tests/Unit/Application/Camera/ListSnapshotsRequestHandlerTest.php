@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-final class SnapshotsRequestHandlerTest extends TestCase
+final class ListSnapshotsRequestHandlerTest extends TestCase
 {
     use CreatesRequests;
 
