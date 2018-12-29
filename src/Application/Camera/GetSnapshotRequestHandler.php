@@ -5,7 +5,7 @@ namespace Detroit\Cctv\Application\Camera;
 use Detroit\Cctv\Domain\Camera\CameraNotFound;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Teapot\StatusCode;
@@ -54,7 +54,7 @@ final class GetSnapshotRequestHandler
                 (string) $camera->getSnapshotUri(),
                 ['timeout' => 2.0]
             );
-        } catch (ClientException $exception) {
+        } catch (RequestException $exception) {
             $offlineImage = file_get_contents($this->offlineImagePath);
             $response->getBody()->write($offlineImage);
 
