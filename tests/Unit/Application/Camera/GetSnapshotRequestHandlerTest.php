@@ -8,7 +8,7 @@ use Detroit\Cctv\Domain\Camera\CameraNotFound;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
 use Detroit\Cctv\Tests\CreatesRequests;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response as GuzzleResponse;
 use League\Uri\Uri;
 use PHPUnit\Framework\TestCase;
@@ -131,7 +131,7 @@ final class GetSnapshotRequestHandlerTest extends TestCase
             ->willReturn($camera);
 
         $this->httpClient->method('request')
-            ->willThrowException(new ClientException(
+            ->willThrowException(new RequestException(
                 'error',
                 $this->createRequest()
             ));
