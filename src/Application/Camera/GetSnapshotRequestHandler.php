@@ -3,6 +3,7 @@
 namespace Detroit\Cctv\Application\Camera;
 
 use Detroit\Cctv\Domain\Camera\CameraRepository;
+use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -13,9 +14,17 @@ final class GetSnapshotRequestHandler
      */
     private $cameraRepository;
 
-    public function __construct(CameraRepository $cameraRepository)
-    {
+    /**
+     * @var Client
+     */
+    private $httpClient;
+
+    public function __construct(
+        CameraRepository $cameraRepository,
+        Client $httpClient
+    ) {
         $this->cameraRepository = $cameraRepository;
+        $this->httpClient = $httpClient;
     }
 
     public function __invoke(
@@ -25,6 +34,9 @@ final class GetSnapshotRequestHandler
     ): ResponseInterface {
         $camera = $this->cameraRepository->findByName($arguments['cameraName']);
 
-        return $response;
+        return $this->httpClient->request(
+            'get',
+            (string) $camera->getSnapshotUri()
+        );
     }
 }
