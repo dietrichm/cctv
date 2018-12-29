@@ -75,7 +75,8 @@ final class GetSnapshotRequestHandlerTest extends TestCase
             ->method('request')
             ->with(
                 'get',
-                $camera->getSnapshotUri()
+                $camera->getSnapshotUri(),
+                ['timeout' => 2.0]
             )
             ->willReturn($expectedResponse);
 
