@@ -2,7 +2,7 @@
 
 namespace Detroit\Cctv\Tests\Unit\Application\Camera;
 
-use Detroit\Cctv\Application\Camera\SnapshotsRequestHandler;
+use Detroit\Cctv\Application\Camera\ListSnapshotsRequestHandler;
 use Detroit\Cctv\Domain\Camera\Camera;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
 use Detroit\Cctv\Tests\CreatesRequests;
@@ -16,7 +16,7 @@ final class SnapshotsRequestHandlerTest extends TestCase
     use CreatesRequests;
 
     /**
-     * @var SnapshotsRequestHandler
+     * @var ListSnapshotsRequestHandler
      */
     private $handler;
 
@@ -29,7 +29,7 @@ final class SnapshotsRequestHandlerTest extends TestCase
     {
         $this->cameraRepository = $this->createMock(CameraRepository::class);
 
-        $this->handler = new SnapshotsRequestHandler(
+        $this->handler = new ListSnapshotsRequestHandler(
             $this->cameraRepository
         );
     }

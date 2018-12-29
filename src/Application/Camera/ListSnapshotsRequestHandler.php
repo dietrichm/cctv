@@ -7,7 +7,7 @@ use Detroit\Cctv\Domain\Camera\CameraRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-final class SnapshotsRequestHandler
+final class ListSnapshotsRequestHandler
 {
     /**
      * @var CameraRepository
