@@ -54,4 +54,15 @@ final class InMemoryCameraRepositoryTest extends TestCase
             $this->repository->findAll()
         );
     }
+
+    /**
+     * @test
+     */
+    public function itReturnsCameraByName()
+    {
+        $this->assertEquals(
+            $this->cameraOne,
+            $this->repository->findByName('foo')
+        );
+    }
 }
