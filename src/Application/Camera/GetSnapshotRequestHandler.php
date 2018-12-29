@@ -2,10 +2,12 @@
 
 namespace Detroit\Cctv\Application\Camera;
 
+use Detroit\Cctv\Domain\Camera\CameraNotFound;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Teapot\StatusCode;
 
 final class GetSnapshotRequestHandler
 {
@@ -32,7 +34,11 @@ final class GetSnapshotRequestHandler
         ResponseInterface $response,
         array $arguments
     ): ResponseInterface {
-        $camera = $this->cameraRepository->findByName($arguments['cameraName']);
+        try {
+            $camera = $this->cameraRepository->findByName($arguments['cameraName']);
+        } catch (CameraNotFound $exception) {
+            return $response->withStatus(StatusCode::NOT_FOUND);
+        }
 
         return $this->httpClient->request(
             'get',
