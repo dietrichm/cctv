@@ -51,7 +51,8 @@ final class GetSnapshotRequestHandler
         try {
             return $this->httpClient->request(
                 'get',
-                (string) $camera->getSnapshotUri()
+                (string) $camera->getSnapshotUri(),
+                ['timeout' => 2.0]
             );
         } catch (ClientException $exception) {
             $offlineImage = file_get_contents($this->offlineImagePath);
