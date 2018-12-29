@@ -3,6 +3,8 @@
 namespace Detroit\Cctv\Tests\Unit\Application\Camera;
 
 use Detroit\Cctv\Application\Camera\InMemoryCameraRepository;
+use Detroit\Cctv\Domain\Camera\Camera;
+use League\Uri\Uri;
 use PHPUnit\Framework\TestCase;
 
 final class InMemoryCameraRepositoryTest extends TestCase
@@ -12,9 +14,31 @@ final class InMemoryCameraRepositoryTest extends TestCase
      */
     private $repository;
 
+    /**
+     * @var Camera
+     */
+    private $cameraOne;
+
+    /**
+     * @var Camera
+     */
+    private $cameraTwo;
+
     public function setUp()
     {
-        $this->repository = new InMemoryCameraRepository();
+        $this->cameraOne = new Camera(
+            'foo',
+            Uri::createFromString('http://example.org/foo')
+        );
+        $this->cameraTwo = new Camera(
+            'bar',
+            Uri::createFromString('http://example.org/bar')
+        );
+
+        $this->repository = new InMemoryCameraRepository([
+            $this->cameraOne,
+            $this->cameraTwo,
+        ]);
     }
 
     /**
