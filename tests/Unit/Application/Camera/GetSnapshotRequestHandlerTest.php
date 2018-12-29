@@ -3,6 +3,7 @@
 namespace Detroit\Cctv\Tests\Unit\Application\Camera;
 
 use Detroit\Cctv\Application\Camera\GetSnapshotRequestHandler;
+use Detroit\Cctv\Domain\Camera\Camera;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
 use Detroit\Cctv\Tests\CreatesRequests;
 use League\Uri\Uri;
@@ -37,9 +38,22 @@ final class GetSnapshotRequestHandlerTest extends TestCase
      */
     public function itReturnsImageFromSnapshotUri()
     {
+        $cameraName = 'foo';
+
+        $camera = new Camera(
+            $cameraName,
+            Uri::createFromString('http://example.org')
+        );
+
+        $this->cameraRepository->expects($this->once())
+            ->method('findByName')
+            ->with($cameraName)
+            ->willReturn($camera);
+
         $response = $this->handler->__invoke(
             $this->createRequest(),
-            new Response()
+            new Response(),
+            ['cameraName' => $cameraName]
         );
 
         $this->assertEmpty((string) $response->getBody());
