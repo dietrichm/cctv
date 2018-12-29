@@ -6,6 +6,8 @@ use Detroit\Cctv\Application\Camera\GetSnapshotRequestHandler;
 use Detroit\Cctv\Domain\Camera\Camera;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
 use Detroit\Cctv\Tests\CreatesRequests;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response as GuzzleResponse;
 use League\Uri\Uri;
 use PHPUnit\Framework\TestCase;
 use Slim\Http\Response;
@@ -24,12 +26,19 @@ final class GetSnapshotRequestHandlerTest extends TestCase
      */
     private $cameraRepository;
 
+    /**
+     * @var MockObject
+     */
+    private $httpClient;
+
     public function setUp()
     {
         $this->cameraRepository = $this->createMock(CameraRepository::class);
+        $this->httpClient = $this->createMock(Client::class);
 
         $this->handler = new GetSnapshotRequestHandler(
-            $this->cameraRepository
+            $this->cameraRepository,
+            $this->httpClient
         );
     }
 
@@ -50,12 +59,25 @@ final class GetSnapshotRequestHandlerTest extends TestCase
             ->with($cameraName)
             ->willReturn($camera);
 
+        $expectedResponse = new GuzzleResponse();
+
+        $this->httpClient->expects($this->once())
+            ->method('request')
+            ->with(
+                'get',
+                $camera->getSnapshotUri()
+            )
+            ->willReturn($expectedResponse);
+
         $response = $this->handler->__invoke(
             $this->createRequest(),
             new Response(),
             ['cameraName' => $cameraName]
         );
 
-        $this->assertEmpty((string) $response->getBody());
+        $this->assertEquals(
+            $expectedResponse,
+            $response
+        );
     }
 }
