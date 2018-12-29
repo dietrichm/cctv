@@ -22,6 +22,8 @@ final class SnapshotsRequestHandler
         ServerRequestInterface $request,
         ResponseInterface $response
     ): ResponseInterface {
+        $cameras = $this->cameraRepository->findAll();
+
         return $response;
     }
 }
