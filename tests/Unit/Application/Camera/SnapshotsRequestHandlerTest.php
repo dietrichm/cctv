@@ -57,6 +57,9 @@ final class SnapshotsRequestHandlerTest extends TestCase
             new Response()
         );
 
-        $this->assertEmpty((string) $response->getBody());
+        $this->assertEquals(
+            '<img src="http://example.org/foo"><img src="http://example.org/bar">',
+            (string) $response->getBody()
+        );
     }
 }
