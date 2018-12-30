@@ -46,27 +46,39 @@ final class ListSnapshotsRequestHandlerTest extends TestCase
      */
     public function itRendersSnapshotsForAllCameras()
     {
+        $expectedResponse = new Response();
+
+        $cameras = [
+            new Camera(
+                'foo',
+                Uri::createFromString('http://example.org/foo')
+            ),
+            new Camera(
+                'bar',
+                Uri::createFromString('http://example.org/bar')
+            ),
+        ];
+
         $this->cameraRepository->expects($this->once())
             ->method('findAll')
-            ->willReturn([
-                new Camera(
-                    'foo',
-                    Uri::createFromString('http://example.org/foo')
-                ),
-                new Camera(
-                    'bar',
-                    Uri::createFromString('http://example.org/bar')
-                ),
-            ]);
+            ->willReturn($cameras);
+
+        $this->view->expects($this->once())
+            ->method('render')
+            ->with(
+                $expectedResponse,
+                'camera/snapshot/list.html.twig',
+                [
+                    'cameras' => $cameras,
+                ]
+            )
+            ->willReturn($expectedResponse);
 
         $response = $this->handler->__invoke(
             $this->createRequest(),
-            new Response()
+            $expectedResponse
         );
 
-        $this->assertEquals(
-            '<img src="/snapshot/foo"><img src="/snapshot/bar">',
-            (string) $response->getBody()
-        );
+        $this->assertEquals($expectedResponse, $response);
     }
 }
