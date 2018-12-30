@@ -1,0 +1,17 @@
+<style type="text/css">
+    html, body, p, img {
+        margin: 0;
+        padding: 0;
+    }
+    img {
+        width: 100%;
+    }
+    @media screen and (min-device-width: 800px) {
+        img {
+            width: 50%;
+        }
+    }
+</style>
+{% for camera in cameras -%}
+    <img src="/snapshot/{{ camera.name }}" name="{{ camera.name }}" />
+{%- endfor %}
