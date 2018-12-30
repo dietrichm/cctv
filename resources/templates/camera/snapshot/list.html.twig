@@ -13,5 +13,5 @@
     }
 </style>
 {% for camera in cameras -%}
-    <img src="/snapshot/{{ camera.name }}" name="{{ camera.name }}" />
+    <img src="{{ path_for('cameraSnapshot', {'cameraName': camera.name}) }}" name="{{ camera.name }}" />
 {%- endfor %}

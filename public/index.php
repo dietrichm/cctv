@@ -14,6 +14,7 @@ $app->getContainer()->addServiceProvider(TemplateServiceProvider::class);
 $app->getContainer()->addServiceProvider(CameraServiceProvider::class);
 
 $app->get('/', ListSnapshotsRequestHandler::class);
-$app->get('/snapshot/{cameraName}', GetSnapshotRequestHandler::class);
+$app->get('/snapshot/{cameraName}', GetSnapshotRequestHandler::class)
+    ->setName('cameraSnapshot');
 
 $app->run();
