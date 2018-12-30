@@ -1,4 +1,4 @@
-.PHONY: build up composer install test
+.PHONY: build up composer install test lint
 
 default: up
 
@@ -16,6 +16,9 @@ install: composer.json composer.lock
 
 test:
 	docker-compose run --rm cctv vendor/bin/phpunit $(filter-out $@,$(MAKECMDGOALS))
+
+lint:
+	docker-compose run --rm --user $(shell id -u):$(shell id -g) cctv vendor/bin/php-cs-fixer fix --verbose
 
 %:
 	@:
