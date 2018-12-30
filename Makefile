@@ -1,4 +1,4 @@
-.PHONY: build up composer install test lint
+.PHONY: build up composer install test lint deploy
 
 default: up
 
@@ -19,6 +19,10 @@ test:
 
 lint:
 	docker-compose run --rm --user $(shell id -u):$(shell id -g) cctv vendor/bin/php-cs-fixer fix --verbose
+
+deploy:
+	composer install
+	rsync -avh --exclude=.git/ --delete-after ./* /var/www/cctv/
 
 %:
 	@:
