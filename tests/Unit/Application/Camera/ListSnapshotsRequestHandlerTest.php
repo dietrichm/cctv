@@ -8,7 +8,6 @@ use Detroit\Cctv\Domain\Camera\CameraRepository;
 use Detroit\Cctv\Tests\CreatesRequests;
 use League\Uri\Uri;
 use PHPUnit\Framework\TestCase;
-use Slim\Http\Request;
 use Slim\Http\Response;
 
 final class ListSnapshotsRequestHandlerTest extends TestCase
