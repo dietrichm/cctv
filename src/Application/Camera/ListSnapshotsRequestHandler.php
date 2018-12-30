@@ -2,7 +2,6 @@
 
 namespace Detroit\Cctv\Application\Camera;
 
-use Detroit\Cctv\Domain\Camera\Camera;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -32,12 +31,14 @@ final class ListSnapshotsRequestHandler
         ServerRequestInterface $request,
         ResponseInterface $response
     ): ResponseInterface {
-        $output = implode('', array_map(function (Camera $camera) {
-            return '<img src="/snapshot/' . $camera->getName() . '">';
-        }, $this->cameraRepository->findAll()));
+        $cameras = $this->cameraRepository->findAll();
 
-        $response->getBody()->write($output);
-
-        return $response;
+        return $this->view->render(
+            $response,
+            'camera/snapshot/list.html.twig',
+            [
+                'cameras' => $cameras,
+            ]
+        );
     }
 }
