@@ -9,6 +9,7 @@ use Detroit\Cctv\Tests\CreatesRequests;
 use League\Uri\Uri;
 use PHPUnit\Framework\TestCase;
 use Slim\Http\Response;
+use Slim\Views\Twig;
 
 final class ListSnapshotsRequestHandlerTest extends TestCase
 {
@@ -24,12 +25,19 @@ final class ListSnapshotsRequestHandlerTest extends TestCase
      */
     private $cameraRepository;
 
+    /**
+     * @var MockObject
+     */
+    private $view;
+
     public function setUp()
     {
         $this->cameraRepository = $this->createMock(CameraRepository::class);
+        $this->view = $this->createMock(Twig::class);
 
         $this->handler = new ListSnapshotsRequestHandler(
-            $this->cameraRepository
+            $this->cameraRepository,
+            $this->view
         );
     }
 

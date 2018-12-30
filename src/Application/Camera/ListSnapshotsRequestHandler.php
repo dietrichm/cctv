@@ -6,6 +6,7 @@ use Detroit\Cctv\Domain\Camera\Camera;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\Views\Twig;
 
 final class ListSnapshotsRequestHandler
 {
@@ -14,9 +15,17 @@ final class ListSnapshotsRequestHandler
      */
     private $cameraRepository;
 
-    public function __construct(CameraRepository $cameraRepository)
-    {
+    /**
+     * @var Twig
+     */
+    private $view;
+
+    public function __construct(
+        CameraRepository $cameraRepository,
+        Twig $view
+    ) {
         $this->cameraRepository = $cameraRepository;
+        $this->view = $view;
     }
 
     public function __invoke(
