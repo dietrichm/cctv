@@ -21,7 +21,7 @@ lint:
 	docker-compose run --rm --user $(shell id -u):$(shell id -g) cctv vendor/bin/php-cs-fixer fix --verbose
 
 deploy:
-	composer install
+	composer install --no-dev
 	rsync -avh --exclude=.git/ --delete-after ./* /var/www/cctv/
 
 %:
