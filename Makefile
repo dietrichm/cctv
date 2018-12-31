@@ -1,17 +1,17 @@
-.PHONY: build up composer install test lint deploy
+.PHONY: build up composer test lint deploy
 
 default: up
 
 build:
 	docker-compose build
 
-up: install
+up: vendor
 	docker-compose up -d
 
 composer:
 	docker run --rm --interactive --tty --volume $(PWD):/app --user $(shell id -u):$(shell id -g) composer $(filter-out $@,$(MAKECMDGOALS))
 
-install: composer.json composer.lock
+vendor: composer.json composer.lock
 	docker run --rm --interactive --tty --volume $(PWD):/app --user $(shell id -u):$(shell id -g) composer install
 
 test:
