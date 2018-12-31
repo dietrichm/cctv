@@ -4,6 +4,7 @@ namespace Detroit\Cctv\Application\Camera;
 
 use Detroit\Cctv\Domain\Camera\CameraNotFound;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
+use Detroit\Cctv\Domain\Camera\CameraUnavailable;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
@@ -22,19 +23,12 @@ final class GetSnapshotRequestHandler
      */
     private $httpClient;
 
-    /**
-     * @var string
-     */
-    private $offlineImagePath;
-
     public function __construct(
         CameraRepository $cameraRepository,
-        Client $httpClient,
-        string $offlineImagePath
+        Client $httpClient
     ) {
         $this->cameraRepository = $cameraRepository;
         $this->httpClient = $httpClient;
-        $this->offlineImagePath = $offlineImagePath;
     }
 
     public function __invoke(
@@ -55,10 +49,7 @@ final class GetSnapshotRequestHandler
                 ['timeout' => 2.0]
             );
         } catch (RequestException $exception) {
-            $offlineImage = file_get_contents($this->offlineImagePath);
-            $response->getBody()->write($offlineImage);
-
-            return $response->withHeader('Content-Type', 'image/jpeg');
+            throw CameraUnavailable::withName($camera->getName());
         }
     }
 }
