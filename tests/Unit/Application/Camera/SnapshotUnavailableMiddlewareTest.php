@@ -3,6 +3,7 @@
 namespace Detroit\Cctv\Tests\Unit\Application\Camera;
 
 use Detroit\Cctv\Application\Camera\SnapshotUnavailableMiddleware;
+use Detroit\Cctv\Domain\Camera\CameraUnavailable;
 use Detroit\Cctv\Tests\CreatesRequests;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
@@ -18,9 +19,18 @@ final class SnapshotUnavailableMiddlewareTest extends TestCase
      */
     private $middleware;
 
+    /**
+     * @var string
+     */
+    private $offlineImagePath;
+
     public function setUp()
     {
-        $this->middleware = new SnapshotUnavailableMiddleware();
+        $this->offlineImagePath = 'public/images/offline.jpg';
+
+        $this->middleware = new SnapshotUnavailableMiddleware(
+            $this->offlineImagePath
+        );
     }
 
     /**
@@ -44,5 +54,31 @@ final class SnapshotUnavailableMiddlewareTest extends TestCase
         );
 
         $this->assertEquals($expectedResponse, $response);
+    }
+
+    /**
+     * @test
+     */
+    public function itReturnsOfflineImageWhenCameraUnavailable()
+    {
+        $response = $this->middleware->__invoke(
+            $this->createRequest(),
+            new Response(),
+            function (
+                RequestInterface $request,
+                ResponseInterface $response
+            ) {
+                throw CameraUnavailable::withName('foo');
+            }
+        );
+
+        $this->assertEquals(
+            'image/jpeg',
+            $response->getHeaderLine('Content-Type')
+        );
+        $this->assertEquals(
+            file_get_contents($this->offlineImagePath),
+            (string) $response->getBody()
+        );
     }
 }
