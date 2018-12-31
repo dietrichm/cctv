@@ -4,7 +4,6 @@ namespace Detroit\Cctv\Application\Camera;
 
 use Detroit\Cctv\Domain\Camera\Camera;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
-use GuzzleHttp\Client;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Uri\Uri;
 
@@ -15,7 +14,7 @@ final class CameraServiceProvider extends AbstractServiceProvider
      */
     protected $provides = [
         CameraRepository::class,
-        GetSnapshotRequestHandler::class,
+        SnapshotUnavailableMiddleware::class,
     ];
 
     public function register(): void
@@ -33,10 +32,8 @@ final class CameraServiceProvider extends AbstractServiceProvider
             ]);
         });
 
-        $this->getContainer()->share(GetSnapshotRequestHandler::class, function () {
-            return new GetSnapshotRequestHandler(
-                $this->getContainer()->get(CameraRepository::class),
-                $this->getContainer()->get(Client::class),
+        $this->getContainer()->share(SnapshotUnavailableMiddleware::class, function () {
+            return new SnapshotUnavailableMiddleware(
                 'images/offline.jpg'
             );
         });
