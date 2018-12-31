@@ -1,4 +1,4 @@
-.PHONY: build up composer test lint vendor-no-dev sync-to-www deploy
+.PHONY: build up down composer test lint vendor-no-dev sync-to-www deploy
 
 default: up
 
@@ -7,6 +7,9 @@ build:
 
 up: vendor
 	docker-compose up -d
+
+down:
+	docker-compose down
 
 composer:
 	docker run --rm --interactive --tty --volume $(PWD):/app --user $(shell id -u):$(shell id -g) composer $(filter-out $@,$(MAKECMDGOALS))
