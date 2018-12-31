@@ -6,6 +6,7 @@ use Detroit\Cctv\Application\Camera\GetSnapshotRequestHandler;
 use Detroit\Cctv\Domain\Camera\Camera;
 use Detroit\Cctv\Domain\Camera\CameraNotFound;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
+use Detroit\Cctv\Domain\Camera\CameraUnavailable;
 use Detroit\Cctv\Tests\CreatesRequests;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -34,21 +35,14 @@ final class GetSnapshotRequestHandlerTest extends TestCase
      */
     private $httpClient;
 
-    /**
-     * @var string
-     */
-    private $offlineImagePath;
-
     public function setUp()
     {
         $this->cameraRepository = $this->createMock(CameraRepository::class);
         $this->httpClient = $this->createMock(Client::class);
-        $this->offlineImagePath = 'public/images/offline.jpg';
 
         $this->handler = new GetSnapshotRequestHandler(
             $this->cameraRepository,
-            $this->httpClient,
-            $this->offlineImagePath
+            $this->httpClient
         );
     }
 
@@ -118,7 +112,7 @@ final class GetSnapshotRequestHandlerTest extends TestCase
     /**
      * @test
      */
-    public function itReturnsOfflineImageWhenFailingToGetSnapshot()
+    public function itThrowsWhenFailingToGetSnapshot()
     {
         $cameraName = 'foo';
 
@@ -136,19 +130,14 @@ final class GetSnapshotRequestHandlerTest extends TestCase
                 $this->createRequest()
             ));
 
-        $response = $this->handler->__invoke(
+        $this->expectExceptionObject(
+            CameraUnavailable::withName('foo')
+        );
+
+        $this->handler->__invoke(
             $this->createRequest(),
             new Response(),
             ['cameraName' => $cameraName]
-        );
-
-        $this->assertEquals(
-            'image/jpeg',
-            $response->getHeaderLine('Content-Type')
-        );
-        $this->assertEquals(
-            file_get_contents($this->offlineImagePath),
-            (string) $response->getBody()
         );
     }
 }
