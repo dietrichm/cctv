@@ -3,6 +3,7 @@
 use Detroit\Cctv\Application\Camera\CameraServiceProvider;
 use Detroit\Cctv\Application\Camera\GetSnapshotRequestHandler;
 use Detroit\Cctv\Application\Camera\ListSnapshotsRequestHandler;
+use Detroit\Cctv\Application\Camera\SnapshotUnavailableMiddleware;
 use Detroit\Cctv\Infrastructure\Http\TemplateServiceProvider;
 use Jenssegers\Lean\App;
 
@@ -15,6 +16,7 @@ $app->getContainer()->addServiceProvider(CameraServiceProvider::class);
 
 $app->get('/', ListSnapshotsRequestHandler::class);
 $app->get('/snapshot/{cameraName}', GetSnapshotRequestHandler::class)
-    ->setName('cameraSnapshot');
+    ->setName('cameraSnapshot')
+    ->add(SnapshotUnavailableMiddleware::class);
 
 $app->run();
