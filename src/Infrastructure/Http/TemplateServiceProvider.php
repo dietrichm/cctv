@@ -23,7 +23,7 @@ final class TemplateServiceProvider extends AbstractServiceProvider
             $view = new Twig(
                 __DIR__ . '/../../../resources/templates',
                 [
-                    'cache' => false,
+                    'cache' => __DIR__ . '/../../../tmp/twig',
                 ]
             );
 
