@@ -22,7 +22,7 @@ lint:
 
 deploy:
 	composer install --no-dev
-	rsync -avh --exclude=.git/ --delete-after ./* /var/www/cctv/
+	rsync -avh --exclude=.git/ --exclude=tmp/ --delete-after ./* /var/www/cctv/
 
 %:
 	@:
