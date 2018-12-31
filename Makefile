@@ -1,4 +1,4 @@
-.PHONY: build up composer test lint deploy
+.PHONY: build up composer test lint vendor-no-dev sync-to-www deploy
 
 default: up
 
@@ -20,9 +20,13 @@ test:
 lint:
 	docker-compose run --rm --user $(shell id -u):$(shell id -g) cctv vendor/bin/php-cs-fixer fix --verbose
 
-deploy:
+vendor-no-dev: composer.json composer.lock
 	composer install --no-dev
+
+sync-to-www:
 	rsync -avh --exclude=.git/ --exclude=tmp/ --delete-after ./* /var/www/cctv/
+
+deploy: vendor-no-dev sync-to-www
 
 %:
 	@:
