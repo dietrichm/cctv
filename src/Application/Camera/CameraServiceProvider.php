@@ -36,7 +36,7 @@ final class CameraServiceProvider extends AbstractServiceProvider
         $this->getContainer()->share(SnapshotUnavailableMiddleware::class, function () {
             return new SnapshotUnavailableMiddleware(
                 $this->getContainer()->get(FilesystemInterface::class),
-                'public/images/offline.jpg'
+                'resources/images/offline.jpg'
             );
         });
     }
