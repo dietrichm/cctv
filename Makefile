@@ -5,7 +5,7 @@ default: up
 build:
 	docker-compose build
 
-up: vendor
+up: vendor .env
 	docker-compose up -d
 
 down:
@@ -16,6 +16,9 @@ composer:
 
 vendor: composer.json composer.lock
 	docker run --rm --interactive --tty --volume $(PWD):/app --user $(shell id -u):$(shell id -g) composer install
+
+.env:
+	cp .env.example .env
 
 test:
 	docker-compose run --rm cctv vendor/bin/phpunit $(filter-out $@,$(MAKECMDGOALS))
