@@ -20,10 +20,11 @@ final class TwigServiceProvider extends AbstractServiceProvider
     public function register(): void
     {
         $this->getContainer()->share(Twig::class, function () {
+            $rootPath = __DIR__ . '/../../';
             $view = new Twig(
-                __DIR__ . '/../../resources/templates',
+                $rootPath . 'resources/templates',
                 [
-                    'cache' => __DIR__ . '/../../tmp/twig',
+                    'cache' => $rootPath . 'tmp/twig',
                 ]
             );
 
