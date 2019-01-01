@@ -29,7 +29,10 @@ final class SnapshotUnavailableMiddleware
             $offlineImage = file_get_contents($this->offlineImagePath);
             $response->getBody()->write($offlineImage);
 
-            return $response->withHeader('Content-Type', 'image/jpeg');
+            return $response->withHeader(
+                'Content-Type',
+                mime_content_type($this->offlineImagePath)
+            );
         }
 
         return $response;
