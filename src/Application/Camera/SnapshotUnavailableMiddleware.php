@@ -3,18 +3,27 @@
 namespace Detroit\Cctv\Application\Camera;
 
 use Detroit\Cctv\Domain\Camera\CameraUnavailable;
+use League\Flysystem\FilesystemInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 final class SnapshotUnavailableMiddleware
 {
     /**
+     * @var FilesystemInterface
+     */
+    private $filesystem;
+
+    /**
      * @var string
      */
     private $offlineImagePath;
 
-    public function __construct(string $offlineImagePath)
-    {
+    public function __construct(
+        FilesystemInterface $filesystem,
+        string $offlineImagePath
+    ) {
+        $this->filesystem = $filesystem;
         $this->offlineImagePath = $offlineImagePath;
     }
 
@@ -26,12 +35,13 @@ final class SnapshotUnavailableMiddleware
         try {
             $response = $next($request, $response);
         } catch (CameraUnavailable $exception) {
-            $offlineImage = file_get_contents($this->offlineImagePath);
-            $response->getBody()->write($offlineImage);
+            $response->getBody()->write(
+                $this->filesystem->read($this->offlineImagePath)
+            );
 
             return $response->withHeader(
                 'Content-Type',
-                mime_content_type($this->offlineImagePath)
+                $this->filesystem->getMimetype($this->offlineImagePath)
             );
         }
 
