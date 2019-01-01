@@ -5,6 +5,7 @@ namespace Detroit\Cctv\Application\Camera;
 use Detroit\Cctv\Domain\Camera\Camera;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
 use League\Container\ServiceProvider\AbstractServiceProvider;
+use League\Flysystem\FilesystemInterface;
 use League\Uri\Uri;
 
 final class CameraServiceProvider extends AbstractServiceProvider
@@ -34,7 +35,8 @@ final class CameraServiceProvider extends AbstractServiceProvider
 
         $this->getContainer()->share(SnapshotUnavailableMiddleware::class, function () {
             return new SnapshotUnavailableMiddleware(
-                'images/offline.jpg'
+                $this->getContainer()->get(FilesystemInterface::class),
+                'public/images/offline.jpg'
             );
         });
     }
