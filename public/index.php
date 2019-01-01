@@ -6,9 +6,13 @@ use Detroit\Cctv\Application\Camera\ListSnapshotsRequestHandler;
 use Detroit\Cctv\Application\Camera\SnapshotUnavailableMiddleware;
 use Detroit\Cctv\Infrastructure\FilesystemServiceProvider;
 use Detroit\Cctv\Infrastructure\TwigServiceProvider;
+use Dotenv\Dotenv;
 use Jenssegers\Lean\App;
 
 require __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = new Dotenv(__DIR__ . '/..');
+$dotenv->load();
 
 $app = new App();
 
