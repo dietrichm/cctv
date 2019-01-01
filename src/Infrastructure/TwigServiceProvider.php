@@ -1,6 +1,6 @@
 <?php
 
-namespace Detroit\Cctv\Infrastructure\Http;
+namespace Detroit\Cctv\Infrastructure;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use Slim\Http\Uri;
@@ -8,7 +8,7 @@ use Slim\Interfaces\RouterInterface;
 use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
 
-final class TemplateServiceProvider extends AbstractServiceProvider
+final class TwigServiceProvider extends AbstractServiceProvider
 {
     /**
      * @var array
@@ -21,9 +21,9 @@ final class TemplateServiceProvider extends AbstractServiceProvider
     {
         $this->getContainer()->share(Twig::class, function () {
             $view = new Twig(
-                __DIR__ . '/../../../resources/templates',
+                __DIR__ . '/../../resources/templates',
                 [
-                    'cache' => __DIR__ . '/../../../tmp/twig',
+                    'cache' => __DIR__ . '/../../tmp/twig',
                 ]
             );
 
