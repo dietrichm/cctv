@@ -30,7 +30,7 @@ vendor-no-dev: composer.json composer.lock
 	composer install --no-dev
 
 sync-to-www:
-	rsync -avh --exclude=.git/ --exclude=tests/ --delete-after ./* /var/www/cctv/
+	rsync -avh --exclude=.git/ --exclude=tests/ --exclude=.env --delete-after . /var/www/cctv/
 
 deploy: vendor-no-dev sync-to-www
 
