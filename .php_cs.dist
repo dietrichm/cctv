@@ -17,5 +17,6 @@ return Config::create()
         'concat_space' => [
             'spacing' => 'one',
         ],
+        'yoda_style' => null,
     ])
     ->setFinder($finder);
