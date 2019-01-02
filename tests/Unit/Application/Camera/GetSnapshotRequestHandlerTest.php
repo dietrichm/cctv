@@ -64,6 +64,7 @@ final class GetSnapshotRequestHandlerTest extends TestCase
             ->willReturn($camera);
 
         $expectedResponse = new GuzzleResponse();
+        $expectedResponse->getBody()->write('snapshot');
 
         $this->httpClient->expects($this->once())
             ->method('request')
@@ -81,8 +82,8 @@ final class GetSnapshotRequestHandlerTest extends TestCase
         );
 
         $this->assertEquals(
-            $expectedResponse,
-            $response
+            $expectedResponse->getBody(),
+            $response->getBody()
         );
     }
 
