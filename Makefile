@@ -26,6 +26,9 @@ test:
 lint:
 	docker-compose run --rm --user $(shell id -u):$(shell id -g) cctv vendor/bin/php-cs-fixer fix --verbose
 
+logs:
+	docker-compose logs -f
+
 vendor-no-dev: composer.json composer.lock
 	composer install --no-dev
 
