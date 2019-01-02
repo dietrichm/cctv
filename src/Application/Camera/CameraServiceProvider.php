@@ -39,15 +39,24 @@ final class CameraServiceProvider extends AbstractServiceProvider
      */
     private function getCameras(): array
     {
-        return [
-            new Camera(
-                'gang',
-                Uri::createFromString('http://192.168.1.15/snapshot.cgi?user=anon&pwd=anon')
-            ),
-            new Camera(
-                'garage',
-                Uri::createFromString('http://192.168.1.16/snapshot.cgi?user=anon&pwd=anon')
-            ),
-        ];
+        $cameras = [];
+
+        for ($index = 1; true; ++$index) {
+            $prefix = 'CAMERA_' . $index . '_';
+
+            $name = getenv($prefix . 'NAME');
+            $snapshotUri = getenv($prefix . 'SNAPSHOT_URI');
+
+            if ($name === false || $snapshotUri === false) {
+                break;
+            }
+
+            $cameras[] = new Camera(
+                $name,
+                Uri::createFromString($snapshotUri)
+            );
+        }
+
+        return $cameras;
     }
 }
