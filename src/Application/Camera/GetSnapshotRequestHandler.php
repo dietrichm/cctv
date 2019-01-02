@@ -43,7 +43,7 @@ final class GetSnapshotRequestHandler
         }
 
         try {
-            return $this->httpClient->request(
+            $response = $this->httpClient->request(
                 'get',
                 (string) $camera->getSnapshotUri(),
                 ['timeout' => 2.0]
@@ -51,5 +51,10 @@ final class GetSnapshotRequestHandler
         } catch (RequestException $exception) {
             throw CameraUnavailable::withName($camera->getName());
         }
+
+        return $response->withHeader(
+            'Cache-Control',
+            'no-cache, no-store, must-revalidate'
+        );
     }
 }
