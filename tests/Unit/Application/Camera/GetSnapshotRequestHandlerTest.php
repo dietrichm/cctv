@@ -85,6 +85,10 @@ final class GetSnapshotRequestHandlerTest extends TestCase
             $expectedResponse->getBody(),
             $response->getBody()
         );
+        $this->assertEquals(
+            $response->getHeaderLine('Cache-Control'),
+            'no-cache, no-store, must-revalidate'
+        );
     }
 
     /**
