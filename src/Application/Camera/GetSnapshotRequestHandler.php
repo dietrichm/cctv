@@ -37,7 +37,9 @@ final class GetSnapshotRequestHandler
         array $arguments
     ): ResponseInterface {
         try {
-            $camera = $this->cameraRepository->findByName($arguments['cameraName']);
+            $camera = $this->cameraRepository->findByName(
+                $arguments['cameraName']
+            );
         } catch (CameraNotFound $exception) {
             return $response->withStatus(StatusCode::NOT_FOUND);
         }
