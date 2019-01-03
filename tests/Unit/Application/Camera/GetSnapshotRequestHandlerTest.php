@@ -85,6 +85,32 @@ final class GetSnapshotRequestHandlerTest extends TestCase
             $expectedResponse->getBody(),
             $response->getBody()
         );
+    }
+
+    /**
+     * @test
+     */
+    public function itDisablesCachingOnReturnedSnapshots()
+    {
+        $cameraName = 'foo';
+
+        $camera = new Camera(
+            $cameraName,
+            Uri::createFromString('http://example.org')
+        );
+
+        $this->cameraRepository->method('findByName')
+            ->willReturn($camera);
+
+        $this->httpClient->method('request')
+            ->willReturn(new GuzzleResponse());
+
+        $response = $this->handler->__invoke(
+            $this->createRequest(),
+            new Response(),
+            ['cameraName' => $cameraName]
+        );
+
         $this->assertEquals(
             $response->getHeaderLine('Cache-Control'),
             'no-cache, no-store, must-revalidate'
