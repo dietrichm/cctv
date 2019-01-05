@@ -1,5 +1,7 @@
 .PHONY: build up down composer test lint vendor-no-dev sync-to-www deploy
 
+user := $(shell id -u):$(shell id -g)
+
 default: up
 
 build:
@@ -12,10 +14,10 @@ down:
 	docker-compose down
 
 composer:
-	docker-compose run --rm --user $(shell id -u):$(shell id -g) cctv composer $(filter-out $@,$(MAKECMDGOALS))
+	docker-compose run --rm --user $(user) cctv composer $(filter-out $@,$(MAKECMDGOALS))
 
 vendor: composer.json composer.lock
-	docker-compose run --rm --user $(shell id -u):$(shell id -g) cctv composer install
+	docker-compose run --rm --user $(user) cctv composer install
 
 .env:
 	cp .env.example .env
@@ -24,7 +26,7 @@ test:
 	docker-compose run --rm cctv vendor/bin/phpunit $(filter-out $@,$(MAKECMDGOALS))
 
 lint:
-	docker-compose run --rm --user $(shell id -u):$(shell id -g) cctv vendor/bin/php-cs-fixer fix --verbose
+	docker-compose run --rm --user $(user) cctv vendor/bin/php-cs-fixer fix --verbose
 
 logs:
 	docker-compose logs -f
