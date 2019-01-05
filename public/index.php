@@ -13,7 +13,7 @@ use Slim\Settings;
 require __DIR__ . '/../vendor/autoload.php';
 
 $dotenv = new Dotenv(__DIR__ . '/..');
-$dotenv->load();
+$dotenv->overload();
 
 $app = new App();
 
