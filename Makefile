@@ -1,4 +1,4 @@
-.PHONY: build up down composer test lint logs cache-clear vendor-no-dev sync-to-www local-cache-clear deploy
+.PHONY: build up down composer test lint logs cache-clear local-cache-clear deploy
 
 user := $(shell id -u):$(shell id -g)
 
@@ -34,16 +34,12 @@ logs:
 cache-clear:
 	docker-compose exec cctv bin/cache-clear.sh
 
-vendor-no-dev: composer.json composer.lock
-	composer install --no-dev
-
-sync-to-www:
-	rsync -avh --exclude=.git/ --exclude=tests/ --exclude=.env --delete-after . /var/www/cctv/
-
 local-cache-clear:
 	bin/cache-clear.sh
 
-deploy: vendor-no-dev sync-to-www
+deploy:
+	composer install --no-dev
+	rsync -avh --exclude=.git/ --exclude=tests/ --exclude=.env --delete-after . /var/www/cctv/
 
 %:
 	@:
