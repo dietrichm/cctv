@@ -14,19 +14,19 @@ down:
 	docker-compose down
 
 composer:
-	docker-compose run --rm --user $(user) cctv composer $(filter-out $@,$(MAKECMDGOALS))
+	docker-compose exec --user $(user) cctv composer $(filter-out $@,$(MAKECMDGOALS))
 
 vendor: composer.json composer.lock
-	docker-compose run --rm --user $(user) cctv composer install
+	docker-compose exec --user $(user) cctv composer install
 
 .env:
 	cp .env.example .env
 
 test:
-	docker-compose run --rm cctv vendor/bin/phpunit $(filter-out $@,$(MAKECMDGOALS))
+	docker-compose exec cctv vendor/bin/phpunit $(filter-out $@,$(MAKECMDGOALS))
 
 lint:
-	docker-compose run --rm --user $(user) cctv vendor/bin/php-cs-fixer fix --verbose
+	docker-compose exec --user $(user) cctv vendor/bin/php-cs-fixer fix --verbose
 
 logs:
 	docker-compose logs -f
