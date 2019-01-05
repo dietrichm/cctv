@@ -1,4 +1,4 @@
-.PHONY: build up down composer test lint vendor-no-dev sync-to-www deploy
+.PHONY: build up down composer test lint logs vendor-no-dev sync-to-www deploy
 
 user := $(shell id -u):$(shell id -g)
 
