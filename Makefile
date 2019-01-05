@@ -1,4 +1,4 @@
-.PHONY: build up down composer test lint logs vendor-no-dev sync-to-www deploy
+.PHONY: build up down composer test lint logs cache-clear vendor-no-dev sync-to-www deploy
 
 user := $(shell id -u):$(shell id -g)
 
@@ -30,6 +30,9 @@ lint:
 
 logs:
 	docker-compose logs -f
+
+cache-clear:
+	docker-compose exec cctv bin/cache-clear.sh
 
 vendor-no-dev: composer.json composer.lock
 	composer install --no-dev
