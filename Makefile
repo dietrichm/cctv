@@ -1,4 +1,4 @@
-.PHONY: build up down composer test lint logs cache-clear vendor-no-dev sync-to-www deploy
+.PHONY: build up down composer test lint logs cache-clear vendor-no-dev sync-to-www local-cache-clear deploy
 
 user := $(shell id -u):$(shell id -g)
 
@@ -39,6 +39,9 @@ vendor-no-dev: composer.json composer.lock
 
 sync-to-www:
 	rsync -avh --exclude=.git/ --exclude=tests/ --exclude=.env --delete-after . /var/www/cctv/
+
+local-cache-clear:
+	bin/cache-clear.sh
 
 deploy: vendor-no-dev sync-to-www
 
