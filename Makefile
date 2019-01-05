@@ -35,7 +35,7 @@ cache-clear:
 	docker-compose exec cctv bin/cache-clear.sh
 
 local-cache-clear:
-	bin/cache-clear.sh
+	sudo env TMP_DIR=/tmp/*-php-fpm.service-*/tmp bin/cache-clear.sh
 
 deploy:
 	composer install --no-dev
