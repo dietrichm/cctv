@@ -6,3 +6,4 @@ services:
             - "80:80"
         volumes:
             - .:/code
+        user: "1000:1000"
