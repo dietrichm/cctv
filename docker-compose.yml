@@ -7,4 +7,3 @@ services:
         volumes:
             - .:/code
             - ~/.cache/composer:/.composer/cache
-        user: "1000:1000"
