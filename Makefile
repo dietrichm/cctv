@@ -12,10 +12,10 @@ down:
 	docker-compose down
 
 composer:
-	docker run --rm --interactive --tty --volume $(PWD):/app --user $(shell id -u):$(shell id -g) composer $(filter-out $@,$(MAKECMDGOALS))
+	docker-compose run --rm --user $(shell id -u):$(shell id -g) cctv composer $(filter-out $@,$(MAKECMDGOALS))
 
 vendor: composer.json composer.lock
-	docker run --rm --interactive --tty --volume $(PWD):/app --user $(shell id -u):$(shell id -g) composer install
+	docker-compose run --rm --user $(shell id -u):$(shell id -g) cctv composer install
 
 .env:
 	cp .env.example .env
