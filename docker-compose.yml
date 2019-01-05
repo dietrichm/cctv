@@ -7,3 +7,5 @@ services:
         volumes:
             - .:/code
             - ~/.cache/composer:/.composer/cache
+        env_file:
+            - .env
