@@ -2,6 +2,8 @@
 
 namespace Detroit\Cctv\Infrastructure;
 
+use Detroit\Cctv\Application\Camera\RebootCameraHandler;
+use Detroit\Cctv\Domain\Camera\RebootCameraCommand;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Tactician\CommandBus;
 use League\Tactician\Container\ContainerLocator;
@@ -36,6 +38,8 @@ final class CommandBusServiceProvider extends AbstractServiceProvider
 
     private function getMapping(): array
     {
-        return [];
+        return [
+            RebootCameraCommand::class => RebootCameraHandler::class,
+        ];
     }
 }
