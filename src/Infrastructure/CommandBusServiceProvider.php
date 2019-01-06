@@ -26,11 +26,16 @@ final class CommandBusServiceProvider extends AbstractServiceProvider
                     new ClassNameExtractor(),
                     new ContainerLocator(
                         $this->getContainer(),
-                        []
+                        $this->getMapping()
                     ),
                     new HandleClassNameInflector()
                 ),
             ]);
         });
+    }
+
+    private function getMapping(): array
+    {
+        return [];
     }
 }
