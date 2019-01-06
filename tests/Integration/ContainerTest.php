@@ -34,7 +34,30 @@ final class ContainerTest extends TestCase
      */
     public function itReturnsInstanceOfSharedDependency()
     {
+        $dependencies = $this->getSharedDependencies();
+
         $this->markTestIncomplete();
+    }
+
+    private function getSharedDependencies(): array
+    {
+        $dependencies = [];
+        $serviceProviderAggregate = $this->getPrivatePropertyValue(
+            $this->container,
+            'providers'
+        );
+
+        foreach ($serviceProviderAggregate as $serviceProvider) {
+            $dependencies = array_merge(
+                $dependencies,
+                $this->getPrivatePropertyValue(
+                    $serviceProvider,
+                    'provides'
+                )
+            );
+        }
+
+        return $dependencies;
     }
 
     private function getPrivatePropertyValue(
