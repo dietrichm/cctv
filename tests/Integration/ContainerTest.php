@@ -9,6 +9,7 @@ use Detroit\Cctv\Infrastructure\TwigServiceProvider;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class ContainerTest extends TestCase
 {
@@ -34,5 +35,16 @@ final class ContainerTest extends TestCase
     public function itReturnsInstanceOfSharedDependency()
     {
         $this->markTestIncomplete();
+    }
+
+    private function getPrivatePropertyValue(
+        object $instance,
+        string $propertyName
+    ) {
+        $reflection = new ReflectionClass(get_class($instance));
+        $property = $reflection->getProperty($propertyName);
+        $property->setAccessible(true);
+
+        return $property->getValue($instance);
     }
 }
