@@ -22,9 +22,9 @@ $app->getContainer()->get(Settings::class)->set(
     getenv('TMP_DIR') . '/router-cache.php'
 );
 
+$app->getContainer()->addServiceProvider(CameraServiceProvider::class);
 $app->getContainer()->addServiceProvider(FilesystemServiceProvider::class);
 $app->getContainer()->addServiceProvider(TwigServiceProvider::class);
-$app->getContainer()->addServiceProvider(CameraServiceProvider::class);
 
 $app->get('/', ListSnapshotsRequestHandler::class);
 $app->get('/snapshot/{cameraName}', GetSnapshotRequestHandler::class)
