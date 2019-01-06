@@ -6,6 +6,7 @@ use Detroit\Cctv\Application\Camera\CameraServiceProvider;
 use Detroit\Cctv\Infrastructure\CommandBusServiceProvider;
 use Detroit\Cctv\Infrastructure\FilesystemServiceProvider;
 use Detroit\Cctv\Infrastructure\TwigServiceProvider;
+use Jenssegers\Lean\SlimServiceProvider;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
 use PHPUnit\Framework\TestCase;
@@ -26,6 +27,7 @@ final class ContainerTest extends TestCase
         $this->container->addServiceProvider(CameraServiceProvider::class);
         $this->container->addServiceProvider(CommandBusServiceProvider::class);
         $this->container->addServiceProvider(FilesystemServiceProvider::class);
+        $this->container->addServiceProvider(SlimServiceProvider::class);
         $this->container->addServiceProvider(TwigServiceProvider::class);
     }
 
