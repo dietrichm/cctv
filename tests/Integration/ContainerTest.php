@@ -36,9 +36,10 @@ final class ContainerTest extends TestCase
      */
     public function itReturnsInstanceOfSharedDependency()
     {
-        $dependencies = $this->getSharedDependencies();
-
-        $this->markTestIncomplete();
+        foreach ($this->getSharedDependencies() as $dependency) {
+            $this->container->get($dependency);
+            $this->addToAssertionCount(1);
+        }
     }
 
     private function getSharedDependencies(): array
