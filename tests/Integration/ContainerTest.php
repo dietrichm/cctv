@@ -37,8 +37,12 @@ final class ContainerTest extends TestCase
     public function itReturnsInstanceOfSharedDependency()
     {
         foreach ($this->getSharedDependencies() as $dependency) {
-            $this->container->get($dependency);
+            $instance = $this->container->get($dependency);
             $this->addToAssertionCount(1);
+
+            if (interface_exists($dependency) || class_exists($dependency)) {
+                $this->assertInstanceOf($dependency, $instance);
+            }
         }
     }
 
