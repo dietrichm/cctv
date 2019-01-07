@@ -16,6 +16,11 @@ final class Camera
      */
     private $snapshotUri;
 
+    /**
+     * @var Uri|null
+     */
+    private $rebootUri;
+
     public function __construct(
         string $name,
         Uri $snapshotUri
@@ -32,5 +37,15 @@ final class Camera
     public function getSnapshotUri(): Uri
     {
         return $this->snapshotUri;
+    }
+
+    public function getRebootUri(): ?Uri
+    {
+        return $this->rebootUri;
+    }
+
+    public function setRebootUri(Uri $rebootUri): void
+    {
+        $this->rebootUri = $rebootUri;
     }
 }
