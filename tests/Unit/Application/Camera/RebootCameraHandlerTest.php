@@ -6,13 +6,18 @@ use Detroit\Cctv\Application\Camera\RebootCameraHandler;
 use Detroit\Cctv\Domain\Camera\Camera;
 use Detroit\Cctv\Domain\Camera\CameraNotFound;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
+use Detroit\Cctv\Domain\Camera\CameraUnavailable;
 use Detroit\Cctv\Domain\Camera\RebootCameraCommand;
+use Detroit\Cctv\Tests\CreatesRequests;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use League\Uri\Uri;
 use PHPUnit\Framework\TestCase;
 
 final class RebootCameraHandlerTest extends TestCase
 {
+    use CreatesRequests;
+
     /**
      * @var RebootCameraHandler
      */
@@ -106,6 +111,37 @@ final class RebootCameraHandlerTest extends TestCase
             ->method('request');
 
         $this->expectExceptionObject($exception);
+
+        $this->handler->handleRebootCameraCommand($command);
+    }
+
+    /**
+     * @test
+     */
+    public function itThrowsWhenFailingToCallRebootUri()
+    {
+        $command = new RebootCameraCommand('foo');
+
+        $camera = new Camera(
+            'foo',
+            Uri::createFromString('http://example.org')
+        );
+        $camera->setRebootUri(
+            Uri::createFromString('http://example.org/reboot')
+        );
+
+        $this->cameraRepository->method('findByName')
+            ->willReturn($camera);
+
+        $this->httpClient->method('request')
+            ->willThrowException(new RequestException(
+                'error',
+                $this->createRequest()
+            ));
+
+        $this->expectExceptionObject(
+            CameraUnavailable::withName('foo')
+        );
 
         $this->handler->handleRebootCameraCommand($command);
     }
