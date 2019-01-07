@@ -14,4 +14,9 @@ final class RebootCameraCommand
     ) {
         $this->name = $name;
     }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
 }
