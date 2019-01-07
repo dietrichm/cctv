@@ -39,6 +39,11 @@ final class Camera
         return $this->snapshotUri;
     }
 
+    public function hasRebootUri(): bool
+    {
+        return $this->rebootUri !== null;
+    }
+
     public function getRebootUri(): ?Uri
     {
         return $this->rebootUri;

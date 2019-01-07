@@ -32,6 +32,10 @@ final class RebootCameraHandler
             $command->getName()
         );
 
+        if (!$camera->hasRebootUri()) {
+            return;
+        }
+
         $this->httpClient->request(
             'get',
             (string) $camera->getRebootUri()
