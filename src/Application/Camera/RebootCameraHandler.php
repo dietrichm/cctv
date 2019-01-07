@@ -3,8 +3,10 @@
 namespace Detroit\Cctv\Application\Camera;
 
 use Detroit\Cctv\Domain\Camera\CameraRepository;
+use Detroit\Cctv\Domain\Camera\CameraUnavailable;
 use Detroit\Cctv\Domain\Camera\RebootCameraCommand;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 
 final class RebootCameraHandler
 {
@@ -36,9 +38,13 @@ final class RebootCameraHandler
             return;
         }
 
-        $this->httpClient->request(
-            'get',
-            (string) $camera->getRebootUri()
-        );
+        try {
+            $this->httpClient->request(
+                'get',
+                (string) $camera->getRebootUri()
+            );
+        } catch (RequestException $exception) {
+            throw CameraUnavailable::withName($camera->getName());
+        }
     }
 }
