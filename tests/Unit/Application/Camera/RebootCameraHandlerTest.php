@@ -4,6 +4,7 @@ namespace Detroit\Cctv\Tests\Unit\Application\Camera;
 
 use Detroit\Cctv\Application\Camera\RebootCameraHandler;
 use Detroit\Cctv\Domain\Camera\Camera;
+use Detroit\Cctv\Domain\Camera\CameraNotFound;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
 use Detroit\Cctv\Domain\Camera\RebootCameraCommand;
 use GuzzleHttp\Client;
@@ -85,6 +86,26 @@ final class RebootCameraHandlerTest extends TestCase
 
         $this->httpClient->expects($this->never())
             ->method('request');
+
+        $this->handler->handleRebootCameraCommand($command);
+    }
+
+    /**
+     * @test
+     */
+    public function itThrowsWhenCameraDoesNotExist()
+    {
+        $command = new RebootCameraCommand('foo');
+
+        $exception = CameraNotFound::withName('nonexistant');
+
+        $this->cameraRepository->method('findByName')
+            ->willThrowException($exception);
+
+        $this->httpClient->expects($this->never())
+            ->method('request');
+
+        $this->expectExceptionObject($exception);
 
         $this->handler->handleRebootCameraCommand($command);
     }
