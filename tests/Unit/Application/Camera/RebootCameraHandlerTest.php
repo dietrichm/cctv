@@ -67,4 +67,25 @@ final class RebootCameraHandlerTest extends TestCase
 
         $this->handler->handleRebootCameraCommand($command);
     }
+
+    /**
+     * @test
+     */
+    public function itOnlyCallsRebootUriWhenAvailable()
+    {
+        $command = new RebootCameraCommand('foo');
+
+        $camera = new Camera(
+            'foo',
+            Uri::createFromString('http://example.org')
+        );
+
+        $this->cameraRepository->method('findByName')
+            ->willReturn($camera);
+
+        $this->httpClient->expects($this->never())
+            ->method('request');
+
+        $this->handler->handleRebootCameraCommand($command);
+    }
 }
