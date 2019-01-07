@@ -7,7 +7,7 @@ default: up
 build:
 	docker-compose build
 
-up: vendor .env
+up: .env
 	docker-compose up -d
 
 down:
