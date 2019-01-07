@@ -46,15 +46,22 @@ final class CameraServiceProvider extends AbstractServiceProvider
 
             $name = getenv($prefix . 'NAME');
             $snapshotUri = getenv($prefix . 'SNAPSHOT_URI');
+            $rebootUri = getenv($prefix . 'REBOOT_URI');
 
             if ($name === false || $snapshotUri === false) {
                 break;
             }
 
-            $cameras[] = new Camera(
+            $camera = new Camera(
                 $name,
                 Uri::createFromString($snapshotUri)
             );
+
+            if ($rebootUri !== false) {
+                $camera->setRebootUri(Uri::createFromString($rebootUri));
+            }
+
+            $cameras[] = $camera;
         }
 
         return $cameras;
