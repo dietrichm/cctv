@@ -20,7 +20,12 @@ final class LoggingServiceProvider extends AbstractServiceProvider
     {
         $this->getContainer()->share(LoggerInterface::class, function () {
             $logger = new Logger('cctv');
-            $logger->pushHandler(new StreamHandler(getenv('LOG_FILE')));
+
+            $logFile = getenv('LOG_FILE');
+
+            if ($logFile !== false) {
+                $logger->pushHandler(new StreamHandler($logFile));
+            }
 
             return $logger;
         });
