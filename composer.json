@@ -12,7 +12,8 @@
         "vlucas/phpdotenv": "^2.5",
         "league/tactician": "^1.0",
         "league/tactician-container": "^2.0",
-        "monolog/monolog": "^1.24"
+        "monolog/monolog": "^1.24",
+        "sentry/sentry": "^1.10"
     },
     "autoload": {
         "psr-4": {
