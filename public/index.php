@@ -6,6 +6,7 @@ use Detroit\Cctv\Application\Camera\ListSnapshotsRequestHandler;
 use Detroit\Cctv\Application\Camera\SnapshotUnavailableMiddleware;
 use Detroit\Cctv\Infrastructure\CommandBusServiceProvider;
 use Detroit\Cctv\Infrastructure\FilesystemServiceProvider;
+use Detroit\Cctv\Infrastructure\LoggingServiceProvider;
 use Detroit\Cctv\Infrastructure\TwigServiceProvider;
 use Dotenv\Dotenv;
 use Jenssegers\Lean\App;
@@ -26,6 +27,7 @@ $app->getContainer()->get(Settings::class)->set(
 $app->getContainer()->addServiceProvider(CameraServiceProvider::class);
 $app->getContainer()->addServiceProvider(CommandBusServiceProvider::class);
 $app->getContainer()->addServiceProvider(FilesystemServiceProvider::class);
+$app->getContainer()->addServiceProvider(LoggingServiceProvider::class);
 $app->getContainer()->addServiceProvider(TwigServiceProvider::class);
 
 $app->get('/', ListSnapshotsRequestHandler::class);
