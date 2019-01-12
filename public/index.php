@@ -10,6 +10,8 @@ use Detroit\Cctv\Infrastructure\LoggingServiceProvider;
 use Detroit\Cctv\Infrastructure\TwigServiceProvider;
 use Dotenv\Dotenv;
 use Jenssegers\Lean\App;
+use Monolog\ErrorHandler;
+use Psr\Log\LoggerInterface;
 use Slim\Settings;
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -19,6 +21,9 @@ $dotenv->overload();
 
 $app = new App();
 
+$app->getContainer()->addServiceProvider(LoggingServiceProvider::class);
+ErrorHandler::register($app->getContainer()->get(LoggerInterface::class));
+
 $app->getContainer()->get(Settings::class)->set(
     'routerCacheFile',
     getenv('TMP_DIR') . '/router-cache.php'
@@ -27,7 +32,6 @@ $app->getContainer()->get(Settings::class)->set(
 $app->getContainer()->addServiceProvider(CameraServiceProvider::class);
 $app->getContainer()->addServiceProvider(CommandBusServiceProvider::class);
 $app->getContainer()->addServiceProvider(FilesystemServiceProvider::class);
-$app->getContainer()->addServiceProvider(LoggingServiceProvider::class);
 $app->getContainer()->addServiceProvider(TwigServiceProvider::class);
 
 $app->get('/', ListSnapshotsRequestHandler::class);
