@@ -27,11 +27,11 @@ final class LoggingServiceProvider extends AbstractServiceProvider
             $logFile = getenv('LOG_FILE');
             $ravenDsn = getenv('RAVEN_DSN');
 
-            if ($logFile !== false) {
+            if (!empty($logFile)) {
                 $logger->pushHandler(new StreamHandler($logFile));
             }
 
-            if ($ravenDsn !== false) {
+            if (!empty($ravenDsn)) {
                 $ravenHandler = new RavenHandler(new Raven_Client($ravenDsn));
                 $ravenHandler->setFormatter(
                     new LineFormatter("%message% %context% %extra%\n")

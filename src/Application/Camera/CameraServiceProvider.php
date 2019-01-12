@@ -57,7 +57,7 @@ final class CameraServiceProvider extends AbstractServiceProvider
                 Uri::createFromString($snapshotUri)
             );
 
-            if ($rebootUri !== false) {
+            if (!empty($rebootUri)) {
                 $camera->setRebootUri(Uri::createFromString($rebootUri));
             }
 
