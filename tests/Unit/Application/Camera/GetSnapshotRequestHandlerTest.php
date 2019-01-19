@@ -78,7 +78,7 @@ final class GetSnapshotRequestHandlerTest extends TestCase
         $response = $this->handler->__invoke(
             $this->createRequest(),
             new Response(),
-            ['cameraName' => $cameraName]
+            $cameraName
         );
 
         $this->assertEquals(
@@ -108,7 +108,7 @@ final class GetSnapshotRequestHandlerTest extends TestCase
         $response = $this->handler->__invoke(
             $this->createRequest(),
             new Response(),
-            ['cameraName' => $cameraName]
+            $cameraName
         );
 
         $this->assertEquals(
@@ -133,7 +133,7 @@ final class GetSnapshotRequestHandlerTest extends TestCase
         $response = $this->handler->__invoke(
             $this->createRequest(),
             new Response(),
-            ['cameraName' => $cameraName]
+            $cameraName
         );
 
         $this->assertEquals(StatusCode::NOT_FOUND, $response->getStatusCode());
@@ -168,7 +168,7 @@ final class GetSnapshotRequestHandlerTest extends TestCase
         $this->handler->__invoke(
             $this->createRequest(),
             new Response(),
-            ['cameraName' => $cameraName]
+            $cameraName
         );
     }
 }
