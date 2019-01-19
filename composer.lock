@@ -222,25 +222,25 @@
         },
         {
             "name": "jenssegers/lean",
-            "version": "v1.0.0",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jenssegers/lean.git",
-                "reference": "b3fd391e57983430b4b38dc272f23289068f1675"
+                "reference": "22d6dea6b73a4214e40ad26f807710fc57c2b9b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jenssegers/lean/zipball/b3fd391e57983430b4b38dc272f23289068f1675",
-                "reference": "b3fd391e57983430b4b38dc272f23289068f1675",
+                "url": "https://api.github.com/repos/jenssegers/lean/zipball/22d6dea6b73a4214e40ad26f807710fc57c2b9b3",
+                "reference": "22d6dea6b73a4214e40ad26f807710fc57c2b9b3",
                 "shasum": ""
             },
             "require": {
                 "league/container": "^2.0|^3.0",
-                "php": ">=5.6",
+                "php": ">=7.0",
                 "slim/slim": "^3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.0|^6.0|^7.0",
+                "phpunit/phpunit": "^6.0|^7.0",
                 "satooshi/php-coveralls": "^2.0"
             },
             "type": "library",
@@ -267,7 +267,7 @@
                 "league",
                 "slim"
             ],
-            "time": "2018-08-31T13:32:53+00:00"
+            "time": "2019-01-14T17:59:51+00:00"
         },
         {
             "name": "league/container",
