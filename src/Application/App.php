@@ -26,7 +26,7 @@ class App extends LeanApp
             ->addServiceProvider(FilesystemServiceProvider::class)
             ->addServiceProvider(TwigServiceProvider::class);
 
-        $this->setSettings();
+        $this->loadSettings();
     }
 
     private function registerLogger(): void
@@ -40,7 +40,7 @@ class App extends LeanApp
         );
     }
 
-    private function setSettings(): void
+    private function loadSettings(): void
     {
         $this->getContainer()->get(Settings::class)->set(
             'routerCacheFile',
