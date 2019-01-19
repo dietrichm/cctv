@@ -7,9 +7,8 @@ use Detroit\Cctv\Infrastructure\CommandBusServiceProvider;
 use Detroit\Cctv\Infrastructure\FilesystemServiceProvider;
 use Detroit\Cctv\Infrastructure\LoggingServiceProvider;
 use Detroit\Cctv\Infrastructure\TwigServiceProvider;
-use Jenssegers\Lean\SlimServiceProvider;
+use Jenssegers\Lean\App;
 use League\Container\Container;
-use League\Container\ReflectionContainer;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
@@ -22,14 +21,12 @@ final class ContainerTest extends TestCase
 
     public function setUp()
     {
-        $this->container = new Container();
-        $this->container->delegate(new ReflectionContainer());
+        $this->container = (new App())->getContainer();
 
         $this->container->addServiceProvider(CameraServiceProvider::class);
         $this->container->addServiceProvider(CommandBusServiceProvider::class);
         $this->container->addServiceProvider(FilesystemServiceProvider::class);
         $this->container->addServiceProvider(LoggingServiceProvider::class);
-        $this->container->addServiceProvider(SlimServiceProvider::class);
         $this->container->addServiceProvider(TwigServiceProvider::class);
     }
 
