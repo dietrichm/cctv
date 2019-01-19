@@ -18,8 +18,7 @@ class App extends LeanApp
     {
         parent::__construct();
 
-        $this->getContainer()->addServiceProvider(LoggingServiceProvider::class);
-        ErrorHandler::register($this->getContainer()->get(LoggerInterface::class));
+        $this->setLogger();
 
         $this->getContainer()->addServiceProvider(CameraServiceProvider::class);
         $this->getContainer()->addServiceProvider(CommandBusServiceProvider::class);
@@ -27,6 +26,17 @@ class App extends LeanApp
         $this->getContainer()->addServiceProvider(TwigServiceProvider::class);
 
         $this->setSettings();
+    }
+
+    private function setLogger(): void
+    {
+        $this->getContainer()->addServiceProvider(
+            LoggingServiceProvider::class
+        );
+
+        ErrorHandler::register(
+            $this->getContainer()->get(LoggerInterface::class)
+        );
     }
 
     private function setSettings(): void
