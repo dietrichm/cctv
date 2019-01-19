@@ -2,12 +2,12 @@
 
 namespace Detroit\Cctv\Tests\Integration;
 
+use Detroit\Cctv\Application\App;
 use Detroit\Cctv\Application\Camera\CameraServiceProvider;
 use Detroit\Cctv\Infrastructure\CommandBusServiceProvider;
 use Detroit\Cctv\Infrastructure\FilesystemServiceProvider;
 use Detroit\Cctv\Infrastructure\LoggingServiceProvider;
 use Detroit\Cctv\Infrastructure\TwigServiceProvider;
-use Jenssegers\Lean\App;
 use League\Container\Container;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
