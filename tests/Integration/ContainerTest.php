@@ -3,11 +3,6 @@
 namespace Detroit\Cctv\Tests\Integration;
 
 use Detroit\Cctv\Application\App;
-use Detroit\Cctv\Application\Camera\CameraServiceProvider;
-use Detroit\Cctv\Infrastructure\CommandBusServiceProvider;
-use Detroit\Cctv\Infrastructure\FilesystemServiceProvider;
-use Detroit\Cctv\Infrastructure\LoggingServiceProvider;
-use Detroit\Cctv\Infrastructure\TwigServiceProvider;
 use League\Container\Container;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
@@ -22,12 +17,6 @@ final class ContainerTest extends TestCase
     public function setUp()
     {
         $this->container = (new App())->getContainer();
-
-        $this->container->addServiceProvider(CameraServiceProvider::class);
-        $this->container->addServiceProvider(CommandBusServiceProvider::class);
-        $this->container->addServiceProvider(FilesystemServiceProvider::class);
-        $this->container->addServiceProvider(LoggingServiceProvider::class);
-        $this->container->addServiceProvider(TwigServiceProvider::class);
     }
 
     /**
