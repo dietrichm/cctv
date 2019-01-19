@@ -18,7 +18,7 @@ class App extends LeanApp
     {
         parent::__construct();
 
-        $this->setLogger();
+        $this->registerLogger();
 
         $this->getContainer()
             ->addServiceProvider(CameraServiceProvider::class)
@@ -29,7 +29,7 @@ class App extends LeanApp
         $this->setSettings();
     }
 
-    private function setLogger(): void
+    private function registerLogger(): void
     {
         $this->getContainer()->addServiceProvider(
             LoggingServiceProvider::class
