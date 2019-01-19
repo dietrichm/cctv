@@ -20,10 +20,11 @@ class App extends LeanApp
 
         $this->setLogger();
 
-        $this->getContainer()->addServiceProvider(CameraServiceProvider::class);
-        $this->getContainer()->addServiceProvider(CommandBusServiceProvider::class);
-        $this->getContainer()->addServiceProvider(FilesystemServiceProvider::class);
-        $this->getContainer()->addServiceProvider(TwigServiceProvider::class);
+        $this->getContainer()
+            ->addServiceProvider(CameraServiceProvider::class)
+            ->addServiceProvider(CommandBusServiceProvider::class)
+            ->addServiceProvider(FilesystemServiceProvider::class)
+            ->addServiceProvider(TwigServiceProvider::class);
 
         $this->setSettings();
     }
