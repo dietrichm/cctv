@@ -21,14 +21,19 @@ class App extends LeanApp
         $this->getContainer()->addServiceProvider(LoggingServiceProvider::class);
         ErrorHandler::register($this->getContainer()->get(LoggerInterface::class));
 
-        $this->getContainer()->get(Settings::class)->set(
-            'routerCacheFile',
-            getenv('TMP_DIR') . '/router-cache.php'
-        );
-
         $this->getContainer()->addServiceProvider(CameraServiceProvider::class);
         $this->getContainer()->addServiceProvider(CommandBusServiceProvider::class);
         $this->getContainer()->addServiceProvider(FilesystemServiceProvider::class);
         $this->getContainer()->addServiceProvider(TwigServiceProvider::class);
+
+        $this->setSettings();
+    }
+
+    private function setSettings(): void
+    {
+        $this->getContainer()->get(Settings::class)->set(
+            'routerCacheFile',
+            getenv('TMP_DIR') . '/router-cache.php'
+        );
     }
 }
