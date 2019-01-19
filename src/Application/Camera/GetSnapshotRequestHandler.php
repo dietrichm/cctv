@@ -34,11 +34,11 @@ final class GetSnapshotRequestHandler
     public function __invoke(
         ServerRequestInterface $request,
         ResponseInterface $response,
-        array $arguments
+        string $cameraName
     ): ResponseInterface {
         try {
             $camera = $this->cameraRepository->findByName(
-                $arguments['cameraName']
+                $cameraName
             );
         } catch (CameraNotFound $exception) {
             return $response->withStatus(StatusCode::NOT_FOUND);

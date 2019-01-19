@@ -28,10 +28,6 @@ $app->getContainer()->get(Settings::class)->set(
     'routerCacheFile',
     getenv('TMP_DIR') . '/router-cache.php'
 );
-$app->getContainer()->get(Settings::class)->set(
-    'methodInjection',
-    false
-);
 
 $app->getContainer()->addServiceProvider(CameraServiceProvider::class);
 $app->getContainer()->addServiceProvider(CommandBusServiceProvider::class);
