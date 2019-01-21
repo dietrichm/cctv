@@ -2,12 +2,10 @@
 
 namespace Detroit\Cctv\Application\Camera;
 
-use Detroit\Cctv\Domain\Camera\Camera;
 use Detroit\Cctv\Domain\Camera\CameraFactory;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Flysystem\FilesystemInterface;
-use League\Uri\Uri;
 
 final class CameraServiceProvider extends AbstractServiceProvider
 {
@@ -40,38 +38,5 @@ final class CameraServiceProvider extends AbstractServiceProvider
                 'resources/images/offline.jpg'
             );
         });
-    }
-
-    /**
-     * @return Camera[]
-     */
-    private function getCameras(): array
-    {
-        $cameras = [];
-
-        for ($index = 1; true; ++$index) {
-            $prefix = 'CAMERA_' . $index . '_';
-
-            $name = getenv($prefix . 'NAME');
-            $snapshotUri = getenv($prefix . 'SNAPSHOT_URI');
-            $rebootUri = getenv($prefix . 'REBOOT_URI');
-
-            if ($name === false || $snapshotUri === false) {
-                break;
-            }
-
-            $camera = new Camera(
-                $name,
-                Uri::createFromString($snapshotUri)
-            );
-
-            if (!empty($rebootUri)) {
-                $camera->setRebootUri(Uri::createFromString($rebootUri));
-            }
-
-            $cameras[] = $camera;
-        }
-
-        return $cameras;
     }
 }
