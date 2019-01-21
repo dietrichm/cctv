@@ -13,6 +13,7 @@ final class CameraServiceProvider extends AbstractServiceProvider
      * @var array
      */
     protected $provides = [
+        CameraFactory::class,
         CameraRepository::class,
         SnapshotUnavailableMiddleware::class,
     ];
