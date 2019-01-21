@@ -13,28 +13,39 @@ class EnvironmentCameraFactory implements CameraFactory
         $cameras = [];
 
         for ($index = 1; true; ++$index) {
-            $prefix = 'CAMERA_' . $index . '_';
+            $camera = $this->createCamera($index);
 
-            $name = getenv($prefix . 'NAME');
-            $snapshotUri = getenv($prefix . 'SNAPSHOT_URI');
-            $rebootUri = getenv($prefix . 'REBOOT_URI');
-
-            if ($name === false || $snapshotUri === false) {
+            if ($camera === null) {
                 break;
-            }
-
-            $camera = new Camera(
-                $name,
-                Uri::createFromString($snapshotUri)
-            );
-
-            if (!empty($rebootUri)) {
-                $camera->setRebootUri(Uri::createFromString($rebootUri));
             }
 
             $cameras[] = $camera;
         }
 
         return $cameras;
+    }
+
+    private function createCamera(int $index): ?Camera
+    {
+        $prefix = 'CAMERA_' . $index . '_';
+
+        $name = getenv($prefix . 'NAME');
+        $snapshotUri = getenv($prefix . 'SNAPSHOT_URI');
+        $rebootUri = getenv($prefix . 'REBOOT_URI');
+
+        if ($name === false || $snapshotUri === false) {
+            return null;
+        }
+
+        $camera = new Camera(
+            $name,
+            Uri::createFromString($snapshotUri)
+        );
+
+        if (!empty($rebootUri)) {
+            $camera->setRebootUri(Uri::createFromString($rebootUri));
+        }
+
+        return $camera;
     }
 }
