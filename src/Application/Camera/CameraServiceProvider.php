@@ -3,6 +3,7 @@
 namespace Detroit\Cctv\Application\Camera;
 
 use Detroit\Cctv\Domain\Camera\Camera;
+use Detroit\Cctv\Domain\Camera\CameraFactory;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Flysystem\FilesystemInterface;
@@ -20,6 +21,10 @@ final class CameraServiceProvider extends AbstractServiceProvider
 
     public function register(): void
     {
+        $this->getContainer()->share(CameraFactory::class, function () {
+            return new EnvironmentCameraFactory();
+        });
+
         $this->getContainer()->share(CameraRepository::class, function () {
             return new InMemoryCameraRepository(
                 $this->getCameras()
