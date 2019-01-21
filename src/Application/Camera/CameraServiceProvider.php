@@ -26,8 +26,11 @@ final class CameraServiceProvider extends AbstractServiceProvider
         });
 
         $this->getContainer()->share(CameraRepository::class, function () {
+            /** @var CameraFactory $cameraFactory */
+            $cameraFactory = $this->getContainer()->get(CameraFactory::class);
+
             return new InMemoryCameraRepository(
-                $this->getCameras()
+                $cameraFactory->createAll()
             );
         });
 
