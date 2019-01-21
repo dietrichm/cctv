@@ -10,15 +10,10 @@ class EnvironmentCameraFactory implements CameraFactory
 {
     public function createAll(): array
     {
+        $index = 1;
         $cameras = [];
 
-        for ($index = 1; true; ++$index) {
-            $camera = $this->createCamera($index);
-
-            if ($camera === null) {
-                break;
-            }
-
+        while ($camera = $this->createCamera($index++)) {
             $cameras[] = $camera;
         }
 
