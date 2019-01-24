@@ -3,8 +3,11 @@
 namespace Detroit\Cctv\Tests\Unit\Application\Camera;
 
 use Detroit\Cctv\Application\Camera\RebootCamerasCommand;
+use Detroit\Cctv\Domain\Camera\Camera;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
+use Detroit\Cctv\Domain\Camera\RebootCameraCommand;
 use League\Tactician\CommandBus;
+use League\Uri\Uri;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Console\Output\Output;
@@ -50,11 +53,32 @@ final class RebootCamerasCommandTest extends TestCase
      */
     public function itRebootsAllCameras()
     {
+        $cameraOne = new Camera(
+            'foo',
+            Uri::createFromString('http://example.org/foo')
+        );
+        $cameraTwo = new Camera(
+            'bar',
+            Uri::createFromString('http://example.org/bar')
+        );
+
+        $this->cameraRepository->expects($this->once())
+            ->method('findAll')
+            ->willReturn([
+                $cameraOne,
+                $cameraTwo,
+            ]);
+
+        $this->commandBus->expects($this->exactly(2))
+            ->method('handle')
+            ->withConsecutive(
+                [new RebootCameraCommand('foo')],
+                [new RebootCameraCommand('bar')]
+            );
+
         $this->command->run(
             $this->createMock(Input::class),
             $this->createMock(Output::class)
         );
-
-        $this->markTestIncomplete();
     }
 }
