@@ -3,6 +3,7 @@
 namespace Detroit\Cctv\Application\Camera;
 
 use Detroit\Cctv\Domain\Camera\CameraRepository;
+use League\Tactician\CommandBus;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -14,13 +15,21 @@ final class RebootCamerasCommand extends Command
      */
     private $cameraRepository;
 
+    /**
+     * @var CommandBus
+     */
+    private $commandBus;
+
     protected static $defaultName = 'reboot-cameras';
 
-    public function __construct(CameraRepository $cameraRepository)
-    {
+    public function __construct(
+        CameraRepository $cameraRepository,
+        CommandBus $commandBus
+    ) {
         parent::__construct();
 
         $this->cameraRepository = $cameraRepository;
+        $this->commandBus = $commandBus;
     }
 
     protected function configure(): void
