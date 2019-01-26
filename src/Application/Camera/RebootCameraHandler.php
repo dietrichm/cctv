@@ -53,6 +53,7 @@ final class RebootCameraHandler
             );
         } catch (RequestException $exception) {
             $this->logger->warning('Could not reboot camera', [
+                'camera' => $camera,
                 'exception' => $exception,
             ]);
 
