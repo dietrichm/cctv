@@ -1,6 +1,7 @@
 #!/usr/bin/env php
 <?php
 
+use Detroit\Cctv\Application\App;
 use Detroit\Cctv\Application\Camera\RebootCamerasCommand;
 use Dotenv\Dotenv;
 use Symfony\Component\Console\Application;
@@ -9,6 +10,8 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $dotenv = new Dotenv(__DIR__ . '/..');
 $dotenv->overload();
+
+$container = (new App())->getContainer();
 
 $application = new Application();
 
