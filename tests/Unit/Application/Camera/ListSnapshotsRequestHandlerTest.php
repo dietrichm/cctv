@@ -3,10 +3,9 @@
 namespace Detroit\Cctv\Tests\Unit\Application\Camera;
 
 use Detroit\Cctv\Application\Camera\ListSnapshotsRequestHandler;
-use Detroit\Cctv\Domain\Camera\Camera;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
+use Detroit\Cctv\Tests\CameraBuilder;
 use Detroit\Cctv\Tests\CreatesRequests;
-use League\Uri\Uri;
 use PHPUnit\Framework\TestCase;
 use Slim\Http\Response;
 use Slim\Views\Twig;
@@ -49,14 +48,10 @@ final class ListSnapshotsRequestHandlerTest extends TestCase
         $expectedResponse = new Response();
 
         $cameras = [
-            new Camera(
-                'foo',
-                Uri::createFromString('http://example.org/foo')
-            ),
-            new Camera(
-                'bar',
-                Uri::createFromString('http://example.org/bar')
-            ),
+            CameraBuilder::create()
+                ->build(),
+            CameraBuilder::create()
+                ->build(),
         ];
 
         $this->cameraRepository->expects($this->once())
