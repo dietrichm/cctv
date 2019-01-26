@@ -5,6 +5,7 @@ namespace Detroit\Cctv\Tests\Unit\Application\Camera;
 use Detroit\Cctv\Application\Camera\RebootCamerasCommand;
 use Detroit\Cctv\Domain\Camera\Camera;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
+use Detroit\Cctv\Domain\Camera\CameraUnavailable;
 use Detroit\Cctv\Domain\Camera\RebootCameraCommand;
 use League\Tactician\CommandBus;
 use League\Uri\Uri;
@@ -79,6 +80,37 @@ final class RebootCamerasCommandTest extends TestCase
         $this->command->run(
             $this->createMock(Input::class),
             $this->createMock(Output::class)
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function itShowsWarningWhenCameraIsUnavailable()
+    {
+        $camera = new Camera(
+            'foo',
+            Uri::createFromString('http://example.org/foo')
+        );
+
+        $this->cameraRepository->method('findAll')
+            ->willReturn([
+                $camera,
+            ]);
+
+        $exception = CameraUnavailable::withName('foo');
+        $this->commandBus->method('handle')
+            ->willThrowException($exception);
+
+        $output = $this->createMock(Output::class);
+
+        $output->expects($this->once())
+            ->method('writeln')
+            ->with('<comment>Could not reboot: ' . $exception->getMessage() . '</comment>');
+
+        $this->command->run(
+            $this->createMock(Input::class),
+            $output
         );
     }
 }
