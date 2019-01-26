@@ -3,15 +3,14 @@
 namespace Detroit\Cctv\Tests\Unit\Application\Camera;
 
 use Detroit\Cctv\Application\Camera\GetSnapshotRequestHandler;
-use Detroit\Cctv\Domain\Camera\Camera;
 use Detroit\Cctv\Domain\Camera\CameraNotFound;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
 use Detroit\Cctv\Domain\Camera\CameraUnavailable;
+use Detroit\Cctv\Tests\CameraBuilder;
 use Detroit\Cctv\Tests\CreatesRequests;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response as GuzzleResponse;
-use League\Uri\Uri;
 use PHPUnit\Framework\TestCase;
 use Slim\Http\Response;
 use Teapot\StatusCode;
@@ -53,10 +52,8 @@ final class GetSnapshotRequestHandlerTest extends TestCase
     {
         $cameraName = 'foo';
 
-        $camera = new Camera(
-            $cameraName,
-            Uri::createFromString('http://example.org')
-        );
+        $camera = CameraBuilder::create()
+            ->build();
 
         $this->cameraRepository->expects($this->once())
             ->method('findByName')
@@ -92,12 +89,8 @@ final class GetSnapshotRequestHandlerTest extends TestCase
      */
     public function itDisablesCachingOnReturnedSnapshots()
     {
-        $cameraName = 'foo';
-
-        $camera = new Camera(
-            $cameraName,
-            Uri::createFromString('http://example.org')
-        );
+        $camera = CameraBuilder::create()
+            ->build();
 
         $this->cameraRepository->method('findByName')
             ->willReturn($camera);
@@ -108,7 +101,7 @@ final class GetSnapshotRequestHandlerTest extends TestCase
         $response = $this->handler->__invoke(
             $this->createRequest(),
             new Response(),
-            $cameraName
+            'foo'
         );
 
         $this->assertEquals(
@@ -145,12 +138,8 @@ final class GetSnapshotRequestHandlerTest extends TestCase
      */
     public function itThrowsWhenFailingToGetSnapshot()
     {
-        $cameraName = 'foo';
-
-        $camera = new Camera(
-            $cameraName,
-            Uri::createFromString('http://example.org')
-        );
+        $camera = CameraBuilder::create()
+            ->build();
 
         $this->cameraRepository->method('findByName')
             ->willReturn($camera);
@@ -168,7 +157,7 @@ final class GetSnapshotRequestHandlerTest extends TestCase
         $this->handler->__invoke(
             $this->createRequest(),
             new Response(),
-            $cameraName
+            'foo'
         );
     }
 }
