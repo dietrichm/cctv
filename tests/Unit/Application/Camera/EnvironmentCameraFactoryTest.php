@@ -3,8 +3,7 @@
 namespace Detroit\Cctv\Tests\Unit\Application\Camera;
 
 use Detroit\Cctv\Application\Camera\EnvironmentCameraFactory;
-use Detroit\Cctv\Domain\Camera\Camera;
-use League\Uri\Uri;
+use Detroit\Cctv\Tests\CameraBuilder;
 use PHPUnit\Framework\TestCase;
 
 final class EnvironmentCameraFactoryTest extends TestCase
@@ -32,14 +31,16 @@ final class EnvironmentCameraFactoryTest extends TestCase
         putenv('CAMERA_2_REBOOT_URI');
         putenv('CAMERA_3_NAME');
 
-        $expectedCameraOne = new Camera(
-            'foo',
-            Uri::createFromString('https://via.placeholder.com/500')
-        );
-        $expectedCameraTwo = new Camera(
-            'bar',
-            Uri::createFromString('https://via.placeholder.com/400')
-        );
+        $expectedCameraOne = CameraBuilder::create()
+            ->withName('foo')
+            ->withSnapshotUri('https://via.placeholder.com/500')
+            ->withoutRebootUri()
+            ->build();
+        $expectedCameraTwo = CameraBuilder::create()
+            ->withName('bar')
+            ->withSnapshotUri('https://via.placeholder.com/400')
+            ->withoutRebootUri()
+            ->build();
 
         $this->assertEquals(
             [
@@ -71,13 +72,11 @@ final class EnvironmentCameraFactoryTest extends TestCase
         putenv('CAMERA_1_REBOOT_URI=https://example.org/reboot1');
         putenv('CAMERA_2_NAME');
 
-        $expectedCamera = new Camera(
-            'foo',
-            Uri::createFromString('https://via.placeholder.com/500')
-        );
-        $expectedCamera->setRebootUri(
-            Uri::createFromString('https://example.org/reboot1')
-        );
+        $expectedCamera = CameraBuilder::create()
+            ->withName('foo')
+            ->withSnapshotUri('https://via.placeholder.com/500')
+            ->withRebootUri('https://example.org/reboot1')
+            ->build();
 
         $this->assertEquals(
             [
