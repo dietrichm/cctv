@@ -3,6 +3,7 @@
 namespace Detroit\Cctv\Application\Camera;
 
 use Detroit\Cctv\Domain\Camera\CameraRepository;
+use Detroit\Cctv\Domain\Camera\CameraUnavailable;
 use Detroit\Cctv\Domain\Camera\RebootCameraCommand;
 use League\Tactician\CommandBus;
 use Symfony\Component\Console\Command\Command;
@@ -43,11 +44,17 @@ final class RebootCamerasCommand extends Command
         OutputInterface $output
     ): void {
         foreach ($this->cameraRepository->findAll() as $camera) {
-            $this->commandBus->handle(
-                new RebootCameraCommand(
-                    $camera->getName()
-                )
-            );
+            try {
+                $this->commandBus->handle(
+                    new RebootCameraCommand(
+                        $camera->getName()
+                    )
+                );
+            } catch (CameraUnavailable $exception) {
+                $output->writeln(
+                    '<comment>Could not reboot: ' . $exception->getMessage() . '</comment>'
+                );
+            }
         }
     }
 }
