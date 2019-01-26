@@ -7,6 +7,7 @@ use Detroit\Cctv\Domain\Camera\CameraUnavailable;
 use Detroit\Cctv\Domain\Camera\RebootCameraCommand;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Psr\Log\LoggerInterface;
 
 final class RebootCameraHandler
 {
@@ -20,12 +21,19 @@ final class RebootCameraHandler
      */
     private $httpClient;
 
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
     public function __construct(
         CameraRepository $cameraRepository,
-        Client $httpClient
+        Client $httpClient,
+        LoggerInterface $logger
     ) {
         $this->cameraRepository = $cameraRepository;
         $this->httpClient = $httpClient;
+        $this->logger = $logger;
     }
 
     public function handleRebootCameraCommand(RebootCameraCommand $command)

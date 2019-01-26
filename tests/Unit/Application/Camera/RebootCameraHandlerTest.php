@@ -13,6 +13,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use League\Uri\Uri;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 final class RebootCameraHandlerTest extends TestCase
 {
@@ -33,14 +34,21 @@ final class RebootCameraHandlerTest extends TestCase
      */
     private $httpClient;
 
+    /**
+     * @var MockObject
+     */
+    private $logger;
+
     public function setUp()
     {
         $this->cameraRepository = $this->createMock(CameraRepository::class);
         $this->httpClient = $this->createMock(Client::class);
+        $this->logger = $this->createMock(LoggerInterface::class);
 
         $this->handler = new RebootCameraHandler(
             $this->cameraRepository,
-            $this->httpClient
+            $this->httpClient,
+            $this->logger
         );
     }
 
