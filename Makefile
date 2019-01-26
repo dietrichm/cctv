@@ -1,4 +1,4 @@
-.PHONY: build up down composer test lint logs cache-clear deploy
+.PHONY: build up down composer test lint logs console cache-clear deploy
 
 user := $(shell id -u):$(shell id -g)
 
@@ -30,6 +30,9 @@ lint:
 
 logs:
 	docker-compose logs -f
+
+console:
+	docker-compose exec cctv bin/console $(filter-out $@,$(MAKECMDGOALS))
 
 cache-clear:
 	docker-compose exec cctv bin/cache-clear.sh
