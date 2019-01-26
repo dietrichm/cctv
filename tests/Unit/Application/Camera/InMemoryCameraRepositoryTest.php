@@ -5,7 +5,7 @@ namespace Detroit\Cctv\Tests\Unit\Application\Camera;
 use Detroit\Cctv\Application\Camera\InMemoryCameraRepository;
 use Detroit\Cctv\Domain\Camera\Camera;
 use Detroit\Cctv\Domain\Camera\CameraNotFound;
-use League\Uri\Uri;
+use Detroit\Cctv\Tests\CameraBuilder;
 use PHPUnit\Framework\TestCase;
 
 final class InMemoryCameraRepositoryTest extends TestCase
@@ -27,14 +27,14 @@ final class InMemoryCameraRepositoryTest extends TestCase
 
     public function setUp()
     {
-        $this->cameraOne = new Camera(
-            'foo',
-            Uri::createFromString('http://example.org/foo')
-        );
-        $this->cameraTwo = new Camera(
-            'bar',
-            Uri::createFromString('http://example.org/bar')
-        );
+        $this->cameraOne = CameraBuilder::create()
+            ->withName('foo')
+            ->withoutRebootUri()
+            ->build();
+        $this->cameraTwo = CameraBuilder::create()
+            ->withName('bar')
+            ->withRebootUri('https://example.org/reboot1')
+            ->build();
 
         $this->repository = new InMemoryCameraRepository([
             $this->cameraOne,
@@ -82,10 +82,6 @@ final class InMemoryCameraRepositoryTest extends TestCase
      */
     public function itReturnsRebootableCameras()
     {
-        $this->cameraTwo->setRebootUri(
-            Uri::createFromString('https://example.org')
-        );
-
         $this->assertEquals(
             [
                 $this->cameraTwo,
