@@ -41,4 +41,16 @@ class InMemoryCameraRepository implements CameraRepository
 
         return $this->cameras[$name];
     }
+
+    public function findRebootable(): array
+    {
+        return array_values(
+            array_filter(
+                $this->cameras,
+                function (Camera $camera) {
+                    return $camera->hasRebootUri();
+                }
+            )
+        );
+    }
 }

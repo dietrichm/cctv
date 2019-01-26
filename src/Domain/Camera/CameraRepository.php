@@ -10,4 +10,9 @@ interface CameraRepository
     public function findAll(): array;
 
     public function findByName(string $name): Camera;
+
+    /**
+     * @return Camera[]
+     */
+    public function findRebootable(): array;
 }
