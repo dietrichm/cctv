@@ -44,7 +44,7 @@ final class RebootCamerasCommand extends Command
         InputInterface $input,
         OutputInterface $output
     ): void {
-        foreach ($this->cameraRepository->findAll() as $camera) {
+        foreach ($this->cameraRepository->findRebootable() as $camera) {
             $this->rebootCamera($camera, $output);
         }
     }
