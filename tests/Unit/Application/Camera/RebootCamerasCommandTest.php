@@ -52,7 +52,7 @@ final class RebootCamerasCommandTest extends TestCase
     /**
      * @test
      */
-    public function itRebootsAllCameras()
+    public function itRebootsRebootableCameras()
     {
         $cameraOne = new Camera(
             'foo',
@@ -64,7 +64,7 @@ final class RebootCamerasCommandTest extends TestCase
         );
 
         $this->cameraRepository->expects($this->once())
-            ->method('findAll')
+            ->method('findRebootable')
             ->willReturn([
                 $cameraOne,
                 $cameraTwo,
@@ -93,7 +93,7 @@ final class RebootCamerasCommandTest extends TestCase
             Uri::createFromString('http://example.org/foo')
         );
 
-        $this->cameraRepository->method('findAll')
+        $this->cameraRepository->method('findRebootable')
             ->willReturn([
                 $camera,
             ]);
@@ -120,7 +120,7 @@ final class RebootCamerasCommandTest extends TestCase
             Uri::createFromString('http://example.org/foo')
         );
 
-        $this->cameraRepository->method('findAll')
+        $this->cameraRepository->method('findRebootable')
             ->willReturn([
                 $camera,
             ]);
