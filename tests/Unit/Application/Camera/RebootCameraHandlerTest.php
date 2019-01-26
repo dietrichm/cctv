@@ -3,15 +3,14 @@
 namespace Detroit\Cctv\Tests\Unit\Application\Camera;
 
 use Detroit\Cctv\Application\Camera\RebootCameraHandler;
-use Detroit\Cctv\Domain\Camera\Camera;
 use Detroit\Cctv\Domain\Camera\CameraNotFound;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
 use Detroit\Cctv\Domain\Camera\CameraUnavailable;
 use Detroit\Cctv\Domain\Camera\RebootCameraCommand;
+use Detroit\Cctv\Tests\CameraBuilder;
 use Detroit\Cctv\Tests\CreatesRequests;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
-use League\Uri\Uri;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -60,13 +59,8 @@ final class RebootCameraHandlerTest extends TestCase
     {
         $command = new RebootCameraCommand('foo');
 
-        $camera = new Camera(
-            'foo',
-            Uri::createFromString('http://example.org')
-        );
-        $camera->setRebootUri(
-            Uri::createFromString('http://example.org/reboot')
-        );
+        $camera = CameraBuilder::create()
+            ->build();
 
         $this->cameraRepository->expects($this->once())
             ->method('findByName')
@@ -90,10 +84,9 @@ final class RebootCameraHandlerTest extends TestCase
     {
         $command = new RebootCameraCommand('foo');
 
-        $camera = new Camera(
-            'foo',
-            Uri::createFromString('http://example.org')
-        );
+        $camera = CameraBuilder::create()
+            ->withoutRebootUri()
+            ->build();
 
         $this->cameraRepository->method('findByName')
             ->willReturn($camera);
@@ -131,13 +124,9 @@ final class RebootCameraHandlerTest extends TestCase
     {
         $command = new RebootCameraCommand('foo');
 
-        $camera = new Camera(
-            'foo',
-            Uri::createFromString('http://example.org')
-        );
-        $camera->setRebootUri(
-            Uri::createFromString('http://example.org/reboot')
-        );
+        $camera = CameraBuilder::create()
+            ->withName('foo')
+            ->build();
 
         $this->cameraRepository->method('findByName')
             ->willReturn($camera);
@@ -162,13 +151,9 @@ final class RebootCameraHandlerTest extends TestCase
     {
         $command = new RebootCameraCommand('foo');
 
-        $camera = new Camera(
-            'foo',
-            Uri::createFromString('http://example.org')
-        );
-        $camera->setRebootUri(
-            Uri::createFromString('http://example.org/reboot')
-        );
+        $camera = CameraBuilder::create()
+            ->withName('foo')
+            ->build();
 
         $this->cameraRepository->method('findByName')
             ->willReturn($camera);
