@@ -52,6 +52,10 @@ final class RebootCameraHandler
                 (string) $camera->getRebootUri()
             );
         } catch (RequestException $exception) {
+            $this->logger->warning('Could not reboot camera', [
+                'exception' => $exception,
+            ]);
+
             throw CameraUnavailable::withName($camera->getName());
         }
     }
