@@ -76,4 +76,21 @@ final class InMemoryCameraRepositoryTest extends TestCase
 
         $this->repository->findByName('nonexistant');
     }
+
+    /**
+     * @test
+     */
+    public function itReturnsRebootableCameras()
+    {
+        $this->cameraTwo->setRebootUri(
+            Uri::createFromString('https://example.org')
+        );
+
+        $this->assertEquals(
+            [
+                $this->cameraTwo,
+            ],
+            $this->repository->findRebootable()
+        );
+    }
 }
