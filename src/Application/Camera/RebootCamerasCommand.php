@@ -63,6 +63,12 @@ final class RebootCamerasCommand extends Command
             $output->writeln(
                 '<comment>Could not reboot: ' . $exception->getMessage() . '</comment>'
             );
+
+            return;
         }
+
+        $output->writeln(
+            '<info>Camera ' . $camera->getName() . ' rebooted.</info>'
+        );
     }
 }
