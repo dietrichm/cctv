@@ -1,0 +1,10 @@
+[Unit]
+Description=Weekly reboot of CCTV cameras
+After=network.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Timer]
+OnCalendar=weekly
+Persistent=true
