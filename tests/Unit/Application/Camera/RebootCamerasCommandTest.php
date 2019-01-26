@@ -3,12 +3,11 @@
 namespace Detroit\Cctv\Tests\Unit\Application\Camera;
 
 use Detroit\Cctv\Application\Camera\RebootCamerasCommand;
-use Detroit\Cctv\Domain\Camera\Camera;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
 use Detroit\Cctv\Domain\Camera\CameraUnavailable;
 use Detroit\Cctv\Domain\Camera\RebootCameraCommand;
+use Detroit\Cctv\Tests\CameraBuilder;
 use League\Tactician\CommandBus;
-use League\Uri\Uri;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Console\Output\Output;
@@ -54,14 +53,12 @@ final class RebootCamerasCommandTest extends TestCase
      */
     public function itRebootsRebootableCameras()
     {
-        $cameraOne = new Camera(
-            'foo',
-            Uri::createFromString('http://example.org/foo')
-        );
-        $cameraTwo = new Camera(
-            'bar',
-            Uri::createFromString('http://example.org/bar')
-        );
+        $cameraOne = CameraBuilder::create()
+            ->withName('foo')
+            ->build();
+        $cameraTwo = CameraBuilder::create()
+            ->withName('bar')
+            ->build();
 
         $this->cameraRepository->expects($this->once())
             ->method('findRebootable')
@@ -88,10 +85,8 @@ final class RebootCamerasCommandTest extends TestCase
      */
     public function itShowsInfoWhenCameraIsRebooted()
     {
-        $camera = new Camera(
-            'foo',
-            Uri::createFromString('http://example.org/foo')
-        );
+        $camera = CameraBuilder::create()
+            ->build();
 
         $this->cameraRepository->method('findRebootable')
             ->willReturn([
@@ -115,10 +110,8 @@ final class RebootCamerasCommandTest extends TestCase
      */
     public function itShowsWarningWhenCameraIsUnavailable()
     {
-        $camera = new Camera(
-            'foo',
-            Uri::createFromString('http://example.org/foo')
-        );
+        $camera = CameraBuilder::create()
+            ->build();
 
         $this->cameraRepository->method('findRebootable')
             ->willReturn([
