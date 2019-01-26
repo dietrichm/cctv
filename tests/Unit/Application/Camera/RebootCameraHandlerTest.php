@@ -12,6 +12,7 @@ use Detroit\Cctv\Tests\CreatesRequests;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use League\Uri\Uri;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
@@ -146,6 +147,43 @@ final class RebootCameraHandlerTest extends TestCase
                 'error',
                 $this->createRequest()
             ));
+
+        $this->expectExceptionObject(
+            CameraUnavailable::withName('foo')
+        );
+
+        $this->handler->handleRebootCameraCommand($command);
+    }
+
+    /**
+     * @test
+     */
+    public function itLogsWhenFailingToCallRebootUri()
+    {
+        $command = new RebootCameraCommand('foo');
+
+        $camera = new Camera(
+            'foo',
+            Uri::createFromString('http://example.org')
+        );
+        $camera->setRebootUri(
+            Uri::createFromString('http://example.org/reboot')
+        );
+
+        $this->cameraRepository->method('findByName')
+            ->willReturn($camera);
+
+        $this->httpClient->method('request')
+            ->willThrowException(new RequestException(
+                'error',
+                $this->createRequest()
+            ));
+
+        $this->logger->expects($this->once())
+            ->method('warning')
+            ->with(
+                'Could not reboot camera'
+            );
 
         $this->expectExceptionObject(
             CameraUnavailable::withName('foo')
