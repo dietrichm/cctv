@@ -13,8 +13,8 @@ $dotenv->overload();
 
 $container = (new App())->getContainer();
 
-$application = new Application();
+$console = new Application();
 
-$application->add(new RebootCamerasCommand());
+$console->add(new RebootCamerasCommand());
 
-$application->run();
+$console->run();
