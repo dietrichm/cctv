@@ -2,6 +2,7 @@
 
 namespace Detroit\Cctv\Application\Camera;
 
+use Detroit\Cctv\Domain\Camera\Camera;
 use Detroit\Cctv\Domain\Camera\CameraRepository;
 use Detroit\Cctv\Domain\Camera\CameraUnavailable;
 use Detroit\Cctv\Domain\Camera\RebootCameraCommand;
@@ -44,17 +45,24 @@ final class RebootCamerasCommand extends Command
         OutputInterface $output
     ): void {
         foreach ($this->cameraRepository->findAll() as $camera) {
-            try {
-                $this->commandBus->handle(
-                    new RebootCameraCommand(
-                        $camera->getName()
-                    )
-                );
-            } catch (CameraUnavailable $exception) {
-                $output->writeln(
-                    '<comment>Could not reboot: ' . $exception->getMessage() . '</comment>'
-                );
-            }
+            $this->rebootCamera($camera, $output);
+        }
+    }
+
+    private function rebootCamera(
+        Camera $camera,
+        OutputInterface $output
+    ): void {
+        try {
+            $this->commandBus->handle(
+                new RebootCameraCommand(
+                    $camera->getName()
+                )
+            );
+        } catch (CameraUnavailable $exception) {
+            $output->writeln(
+                '<comment>Could not reboot: ' . $exception->getMessage() . '</comment>'
+            );
         }
     }
 }
