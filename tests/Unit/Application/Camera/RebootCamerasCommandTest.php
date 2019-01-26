@@ -86,6 +86,33 @@ final class RebootCamerasCommandTest extends TestCase
     /**
      * @test
      */
+    public function itShowsInfoWhenCameraIsRebooted()
+    {
+        $camera = new Camera(
+            'foo',
+            Uri::createFromString('http://example.org/foo')
+        );
+
+        $this->cameraRepository->method('findAll')
+            ->willReturn([
+                $camera,
+            ]);
+
+        $output = $this->createMock(Output::class);
+
+        $output->expects($this->once())
+            ->method('writeln')
+            ->with('<info>Camera foo rebooted.</info>');
+
+        $this->command->run(
+            $this->createMock(Input::class),
+            $output
+        );
+    }
+
+    /**
+     * @test
+     */
     public function itShowsWarningWhenCameraIsUnavailable()
     {
         $camera = new Camera(
