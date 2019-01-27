@@ -3,8 +3,10 @@
 namespace Detroit\Cctv\Application\IpAddress;
 
 use Detroit\Cctv\Domain\IpAddress\IpAddress;
+use Detroit\Cctv\Domain\IpAddress\IpAddressReadFailed;
 use Detroit\Cctv\Domain\IpAddress\PublicIpAddressReader;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 
 final class IpifyPublicIpAddressReader implements PublicIpAddressReader
 {
@@ -20,10 +22,14 @@ final class IpifyPublicIpAddressReader implements PublicIpAddressReader
 
     public function get(): IpAddress
     {
-        $response = $this->httpClient->request(
-            'get',
-            'https://api.ipify.org'
-        );
+        try {
+            $response = $this->httpClient->request(
+                'get',
+                'https://api.ipify.org'
+            );
+        } catch (RequestException $exception) {
+            throw new IpAddressReadFailed();
+        }
 
         return new IpAddress(
             (string) $response->getBody()
