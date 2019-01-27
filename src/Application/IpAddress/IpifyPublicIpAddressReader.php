@@ -20,6 +20,13 @@ final class IpifyPublicIpAddressReader implements PublicIpAddressReader
 
     public function get(): IpAddress
     {
-        return new IpAddress('127.0.0.1');
+        $response = $this->httpClient->request(
+            'get',
+            'https://api.ipify.org'
+        );
+
+        return new IpAddress(
+            (string) $response->getBody()
+        );
     }
 }
