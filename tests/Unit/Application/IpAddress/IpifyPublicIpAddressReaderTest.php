@@ -3,10 +3,17 @@
 namespace Detroit\Cctv\Tests\Unit\Application\IpAddress;
 
 use Detroit\Cctv\Application\IpAddress\IpifyPublicIpAddressReader;
+use GuzzleHttp\Client;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 final class IpifyPublicIpAddressReaderTest extends TestCase
 {
+    /**
+     * @var MockObject
+     */
+    private $httpClient;
+
     /**
      * @var IpifyPublicIpAddressReader
      */
@@ -14,7 +21,11 @@ final class IpifyPublicIpAddressReaderTest extends TestCase
 
     public function setUp()
     {
-        $this->reader = new IpifyPublicIpAddressReader();
+        $this->httpClient = $this->createMock(Client::class);
+
+        $this->reader = new IpifyPublicIpAddressReader(
+            $this->httpClient
+        );
     }
 
     /**
