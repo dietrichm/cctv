@@ -3,6 +3,7 @@
 namespace Detroit\Cctv\Application;
 
 use Detroit\Cctv\Application\Camera\CameraServiceProvider;
+use Detroit\Cctv\Application\IpAddress\IpAddressServiceProvider;
 use Detroit\Cctv\Infrastructure\CommandBusServiceProvider;
 use Detroit\Cctv\Infrastructure\FilesystemServiceProvider;
 use Detroit\Cctv\Infrastructure\LoggingServiceProvider;
@@ -24,6 +25,7 @@ class App extends LeanApp
             ->addServiceProvider(CameraServiceProvider::class)
             ->addServiceProvider(CommandBusServiceProvider::class)
             ->addServiceProvider(FilesystemServiceProvider::class)
+            ->addServiceProvider(IpAddressServiceProvider::class)
             ->addServiceProvider(TwigServiceProvider::class);
 
         $this->loadSettings();
