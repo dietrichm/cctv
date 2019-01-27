@@ -7,6 +7,7 @@ use Detroit\Cctv\Domain\IpAddress\IpAddressReadFailed;
 use Detroit\Cctv\Domain\IpAddress\PublicIpAddressReader;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use InvalidArgumentException;
 
 final class IpifyPublicIpAddressReader implements PublicIpAddressReader
 {
@@ -31,8 +32,14 @@ final class IpifyPublicIpAddressReader implements PublicIpAddressReader
             throw new IpAddressReadFailed();
         }
 
-        return new IpAddress(
-            (string) $response->getBody()
-        );
+        try {
+            $ipAddress = new IpAddress(
+                (string) $response->getBody()
+            );
+        } catch (InvalidArgumentException $exception) {
+            throw new IpAddressReadFailed();
+        }
+
+        return $ipAddress;
     }
 }
