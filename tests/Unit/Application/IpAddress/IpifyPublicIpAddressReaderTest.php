@@ -2,7 +2,7 @@
 
 namespace Detroit\Cctv\Tests\Unit\Application\IpAddress;
 
-use Detroit\Cctv\Application\IpAddress\IpifyPublicIpAddressReader;
+use Detroit\Cctv\Application\IpAddress\HttpPublicIpAddressReader;
 use Detroit\Cctv\Domain\IpAddress\IpAddress;
 use Detroit\Cctv\Domain\IpAddress\IpAddressReadFailed;
 use Detroit\Cctv\Tests\CreatesRequests;
@@ -27,7 +27,7 @@ final class IpifyPublicIpAddressReaderTest extends TestCase
     private $endpoint;
 
     /**
-     * @var IpifyPublicIpAddressReader
+     * @var HttpPublicIpAddressReader
      */
     private $reader;
 
@@ -36,7 +36,7 @@ final class IpifyPublicIpAddressReaderTest extends TestCase
         $this->httpClient = $this->createMock(Client::class);
         $this->endpoint = 'https://example.org';
 
-        $this->reader = new IpifyPublicIpAddressReader(
+        $this->reader = new HttpPublicIpAddressReader(
             $this->httpClient,
             $this->endpoint
         );

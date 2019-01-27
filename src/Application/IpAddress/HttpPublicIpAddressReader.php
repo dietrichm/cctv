@@ -9,7 +9,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use InvalidArgumentException;
 
-final class IpifyPublicIpAddressReader implements PublicIpAddressReader
+final class HttpPublicIpAddressReader implements PublicIpAddressReader
 {
     /**
      * @var Client
