@@ -72,4 +72,20 @@ final class IpifyPublicIpAddressReaderTest extends TestCase
 
         $this->reader->get();
     }
+
+    /**
+     * @test
+     */
+    public function itThrowsWhenGettingInvalidIpAddress()
+    {
+        $response = new Response();
+        $response->getBody()->write('160.237.142.999');
+
+        $this->httpClient->method('request')
+            ->willReturn($response);
+
+        $this->expectException(IpAddressReadFailed::class);
+
+        $this->reader->get();
+    }
 }
