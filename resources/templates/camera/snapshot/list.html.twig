@@ -1,17 +1,24 @@
-<style type="text/css">
-    html, body, p, img {
-        margin: 0;
-        padding: 0;
-    }
-    img {
-        width: 100%;
-    }
-    @media screen and (min-device-width: 800px) {
-        img {
-            width: {{ 100 / cameras|length }}%;
-        }
-    }
-</style>
-{% for camera in cameras -%}
-    <img src="{{ path_for('cameraSnapshot', {'cameraName': camera.name}) }}" name="{{ camera.name }}" />
-{%- endfor %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css">
+            html, body, p, img {
+                margin: 0;
+                padding: 0;
+            }
+            img {
+                width: 100%;
+            }
+            @media screen and (min-device-width: 800px) {
+                img {
+                    width: {{ 100 / cameras|length }}%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        {% for camera in cameras -%}
+            <img src="{{ path_for('cameraSnapshot', {'cameraName': camera.name}) }}" name="{{ camera.name }}" />
+        {%- endfor %}
+    </body>
+</html>
