@@ -12,7 +12,7 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-final class IpifyPublicIpAddressReaderTest extends TestCase
+final class HttpPublicIpAddressReaderTest extends TestCase
 {
     use CreatesRequests;
 
