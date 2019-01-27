@@ -16,9 +16,17 @@ final class IpifyPublicIpAddressReader implements PublicIpAddressReader
      */
     private $httpClient;
 
-    public function __construct(Client $httpClient)
-    {
+    /**
+     * @var string
+     */
+    private $endpoint;
+
+    public function __construct(
+        Client $httpClient,
+        string $endpoint
+    ) {
         $this->httpClient = $httpClient;
+        $this->endpoint = $endpoint;
     }
 
     public function get(): IpAddress
@@ -26,7 +34,7 @@ final class IpifyPublicIpAddressReader implements PublicIpAddressReader
         try {
             $response = $this->httpClient->request(
                 'get',
-                'https://api.ipify.org'
+                $this->endpoint
             );
         } catch (RequestException $exception) {
             throw new IpAddressReadFailed();
