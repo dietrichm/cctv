@@ -22,6 +22,11 @@ final class IpifyPublicIpAddressReaderTest extends TestCase
     private $httpClient;
 
     /**
+     * @var string
+     */
+    private $endpoint;
+
+    /**
      * @var IpifyPublicIpAddressReader
      */
     private $reader;
@@ -29,9 +34,11 @@ final class IpifyPublicIpAddressReaderTest extends TestCase
     public function setUp()
     {
         $this->httpClient = $this->createMock(Client::class);
+        $this->endpoint = 'https://example.org';
 
         $this->reader = new IpifyPublicIpAddressReader(
-            $this->httpClient
+            $this->httpClient,
+            $this->endpoint
         );
     }
 
@@ -47,7 +54,7 @@ final class IpifyPublicIpAddressReaderTest extends TestCase
             ->method('request')
             ->with(
                 'get',
-                'https://api.ipify.org'
+                $this->endpoint
             )
             ->willReturn($response);
 
