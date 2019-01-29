@@ -19,7 +19,7 @@ final class IpAddressServiceProvider extends AbstractServiceProvider
     {
         $this->getContainer()->share(PublicIpAddressReader::class, function () {
             return new HttpPublicIpAddressReader(
-                new Client(),
+                $this->getContainer()->get(Client::class),
                 'https://api.ipify.org'
             );
         });
