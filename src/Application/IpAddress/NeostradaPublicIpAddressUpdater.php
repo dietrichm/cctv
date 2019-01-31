@@ -44,7 +44,12 @@ final class NeostradaPublicIpAddressUpdater implements PublicIpAddressUpdater
     {
         $this->httpClient->request(
             'patch',
-            'https://api.neostrada.com/api/dns/edit/' . $this->dnsId
+            'https://api.neostrada.com/api/dns/edit/' . $this->dnsId,
+            [
+                'headers' => [
+                    'Accept' => 'application/json',
+                ],
+            ]
         );
     }
 }
