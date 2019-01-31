@@ -50,6 +50,10 @@ final class NeostradaPublicIpAddressUpdater implements PublicIpAddressUpdater
                     'Accept' => 'application/json',
                     'Authorization' => 'Bearer ' . $this->apiToken,
                 ],
+                'form_params' => [
+                    'record_id' => $this->recordId,
+                    'content' => $ipAddress->getIpAddress(),
+                ],
             ]
         );
     }

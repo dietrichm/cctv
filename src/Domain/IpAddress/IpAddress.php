@@ -26,4 +26,9 @@ final class IpAddress
     {
         return filter_var($ipAddress, FILTER_VALIDATE_IP);
     }
+
+    public function getIpAddress(): string
+    {
+        return $this->ipAddress;
+    }
 }
