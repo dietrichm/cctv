@@ -4,13 +4,18 @@ namespace Detroit\Cctv\Tests\Unit\Application\IpAddress;
 
 use Detroit\Cctv\Application\IpAddress\NeostradaPublicIpAddressUpdater;
 use Detroit\Cctv\Domain\IpAddress\IpAddress;
+use Detroit\Cctv\Domain\IpAddress\IpAddressUpdateFailed;
+use Detroit\Cctv\Tests\CreatesRequests;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 final class NeostradaPublicIpAddressUpdaterTest extends TestCase
 {
+    use CreatesRequests;
+
     /**
      * @var NeostradaPublicIpAddressUpdater
      */
@@ -55,6 +60,22 @@ final class NeostradaPublicIpAddressUpdaterTest extends TestCase
                 ]
             )
             ->willReturn(new Response());
+
+        $this->updater->set(new IpAddress('179.26.203.196'));
+    }
+
+    /**
+     * @test
+     */
+    public function itThrowsWhenFailingToUpdateIpAddress()
+    {
+        $this->httpClient->method('request')
+            ->willThrowException(new RequestException(
+                'error',
+                $this->createRequest()
+            ));
+
+        $this->expectException(IpAddressUpdateFailed::class);
 
         $this->updater->set(new IpAddress('179.26.203.196'));
     }
