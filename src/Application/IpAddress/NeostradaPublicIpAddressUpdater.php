@@ -42,5 +42,9 @@ final class NeostradaPublicIpAddressUpdater implements PublicIpAddressUpdater
 
     public function set(IpAddress $ipAddress): void
     {
+        $response = $this->httpClient->request(
+            'patch',
+            'https://api.neostrada.com/api/dns/edit/' . $this->dnsId
+        );
     }
 }
