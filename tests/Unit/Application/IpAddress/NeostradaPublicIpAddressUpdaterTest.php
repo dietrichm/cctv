@@ -46,6 +46,7 @@ final class NeostradaPublicIpAddressUpdaterTest extends TestCase
                 [
                     'headers' => [
                         'Accept' => 'application/json',
+                        'Authorization' => 'Bearer api-token',
                     ],
                 ]
             )
