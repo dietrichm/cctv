@@ -3,8 +3,10 @@
 namespace Detroit\Cctv\Application\IpAddress;
 
 use Detroit\Cctv\Domain\IpAddress\IpAddress;
+use Detroit\Cctv\Domain\IpAddress\IpAddressUpdateFailed;
 use Detroit\Cctv\Domain\IpAddress\PublicIpAddressUpdater;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 
 final class NeostradaPublicIpAddressUpdater implements PublicIpAddressUpdater
 {
@@ -42,19 +44,23 @@ final class NeostradaPublicIpAddressUpdater implements PublicIpAddressUpdater
 
     public function set(IpAddress $ipAddress): void
     {
-        $this->httpClient->request(
-            'patch',
-            'https://api.neostrada.com/api/dns/edit/' . $this->dnsId,
-            [
-                'headers' => [
-                    'Accept' => 'application/json',
-                    'Authorization' => 'Bearer ' . $this->apiToken,
-                ],
-                'form_params' => [
-                    'record_id' => $this->recordId,
-                    'content' => $ipAddress->getIpAddress(),
-                ],
-            ]
-        );
+        try {
+            $this->httpClient->request(
+                'patch',
+                'https://api.neostrada.com/api/dns/edit/' . $this->dnsId,
+                [
+                    'headers' => [
+                        'Accept' => 'application/json',
+                        'Authorization' => 'Bearer ' . $this->apiToken,
+                    ],
+                    'form_params' => [
+                        'record_id' => $this->recordId,
+                        'content' => $ipAddress->getIpAddress(),
+                    ],
+                ]
+            );
+        } catch (RequestException $exception) {
+            throw new IpAddressUpdateFailed();
+        }
     }
 }
