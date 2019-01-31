@@ -42,7 +42,12 @@ final class NeostradaPublicIpAddressUpdaterTest extends TestCase
             ->method('request')
             ->with(
                 'patch',
-                'https://api.neostrada.com/api/dns/edit/303'
+                'https://api.neostrada.com/api/dns/edit/303',
+                [
+                    'headers' => [
+                        'Accept' => 'application/json',
+                    ],
+                ]
             )
             ->willReturn(new Response());
 
