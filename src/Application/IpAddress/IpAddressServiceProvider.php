@@ -3,6 +3,7 @@
 namespace Detroit\Cctv\Application\IpAddress;
 
 use Detroit\Cctv\Domain\IpAddress\PublicIpAddressReader;
+use Detroit\Cctv\Domain\IpAddress\PublicIpAddressUpdater;
 use GuzzleHttp\Client;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
@@ -13,6 +14,7 @@ final class IpAddressServiceProvider extends AbstractServiceProvider
      */
     protected $provides = [
         PublicIpAddressReader::class,
+        PublicIpAddressUpdater::class,
     ];
 
     public function register(): void
@@ -21,6 +23,15 @@ final class IpAddressServiceProvider extends AbstractServiceProvider
             return new HttpPublicIpAddressReader(
                 $this->getContainer()->get(Client::class),
                 'https://api.ipify.org'
+            );
+        });
+
+        $this->getContainer()->share(PublicIpAddressUpdater::class, function () {
+            return new NeostradaPublicIpAddressUpdater(
+                $this->getContainer()->get(Client::class),
+                getenv('NEOSTRADA_API_TOKEN'),
+                (int) getenv('NEOSTRADA_DNS_ID'),
+                (int) getenv('NEOSTRADA_RECORD_ID')
             );
         });
     }
