@@ -48,6 +48,7 @@ final class NeostradaPublicIpAddressUpdater implements PublicIpAddressUpdater
             [
                 'headers' => [
                     'Accept' => 'application/json',
+                    'Authorization' => 'Bearer ' . $this->apiToken,
                 ],
             ]
         );
