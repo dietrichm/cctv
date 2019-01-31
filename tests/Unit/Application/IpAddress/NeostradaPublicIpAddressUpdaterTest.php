@@ -48,12 +48,14 @@ final class NeostradaPublicIpAddressUpdaterTest extends TestCase
                         'Accept' => 'application/json',
                         'Authorization' => 'Bearer api-token',
                     ],
+                    'form_params' => [
+                        'record_id' => 808,
+                        'content' => '179.26.203.196',
+                    ],
                 ]
             )
             ->willReturn(new Response());
 
         $this->updater->set(new IpAddress('179.26.203.196'));
-
-        $this->markTestIncomplete();
     }
 }
