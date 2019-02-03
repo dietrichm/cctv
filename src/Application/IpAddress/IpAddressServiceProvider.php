@@ -6,6 +6,7 @@ use Detroit\Cctv\Domain\IpAddress\PublicIpAddressReader;
 use Detroit\Cctv\Domain\IpAddress\PublicIpAddressUpdater;
 use GuzzleHttp\Client;
 use League\Container\ServiceProvider\AbstractServiceProvider;
+use Psr\Log\LoggerInterface;
 
 final class IpAddressServiceProvider extends AbstractServiceProvider
 {
@@ -29,6 +30,7 @@ final class IpAddressServiceProvider extends AbstractServiceProvider
         $this->getContainer()->share(PublicIpAddressUpdater::class, function () {
             return new NeostradaPublicIpAddressUpdater(
                 $this->getContainer()->get(Client::class),
+                $this->getContainer()->get(LoggerInterface::class),
                 getenv('NEOSTRADA_API_TOKEN'),
                 (int) getenv('NEOSTRADA_DNS_ID'),
                 (int) getenv('NEOSTRADA_RECORD_ID')
