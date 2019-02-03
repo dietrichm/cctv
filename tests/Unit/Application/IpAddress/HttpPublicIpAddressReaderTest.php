@@ -91,6 +91,28 @@ final class HttpPublicIpAddressReaderTest extends TestCase
     /**
      * @test
      */
+    public function itLogsWhenFailingToGetIpAddress()
+    {
+        $this->httpClient->method('request')
+            ->willThrowException(new RequestException(
+                'error',
+                $this->createRequest()
+            ));
+
+        $this->logger->expects($this->once())
+            ->method('warning')
+            ->with(
+                'Failing to read public IP address'
+            );
+
+        $this->expectException(IpAddressReadFailed::class);
+
+        $this->reader->get();
+    }
+
+    /**
+     * @test
+     */
     public function itThrowsWhenGettingInvalidIpAddress()
     {
         $response = new Response();
