@@ -53,6 +53,13 @@ final class HttpPublicIpAddressReader implements PublicIpAddressReader
                 (string) $response->getBody()
             );
         } catch (InvalidArgumentException $exception) {
+            $this->logger->warning(
+                'Retrieved malformed public IP address',
+                [
+                    'ip_address' => (string) $response->getBody(),
+                ]
+            );
+
             throw new IpAddressReadFailed();
         }
 
