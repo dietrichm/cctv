@@ -11,6 +11,7 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 final class HttpPublicIpAddressReaderTest extends TestCase
 {
@@ -31,13 +32,20 @@ final class HttpPublicIpAddressReaderTest extends TestCase
      */
     private $reader;
 
+    /**
+     * @var MockObject
+     */
+    private $logger;
+
     public function setUp()
     {
         $this->httpClient = $this->createMock(Client::class);
+        $this->logger = $this->createMock(LoggerInterface::class);
         $this->endpoint = 'https://example.org';
 
         $this->reader = new HttpPublicIpAddressReader(
             $this->httpClient,
+            $this->logger,
             $this->endpoint
         );
     }
