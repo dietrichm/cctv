@@ -103,4 +103,29 @@ final class HttpPublicIpAddressReaderTest extends TestCase
 
         $this->reader->get();
     }
+
+    /**
+     * @test
+     */
+    public function itLogsWhenGettingInvalidIpAddress()
+    {
+        $response = new Response();
+        $response->getBody()->write('160.237.142.999');
+
+        $this->httpClient->method('request')
+            ->willReturn($response);
+
+        $this->logger->expects($this->once())
+            ->method('warning')
+            ->with(
+                'Retrieved malformed public IP address',
+                [
+                    'ip_address' => '160.237.142.999',
+                ]
+            );
+
+        $this->expectException(IpAddressReadFailed::class);
+
+        $this->reader->get();
+    }
 }
