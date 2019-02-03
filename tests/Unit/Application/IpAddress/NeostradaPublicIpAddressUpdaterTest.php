@@ -87,4 +87,29 @@ final class NeostradaPublicIpAddressUpdaterTest extends TestCase
 
         $this->updater->set(new IpAddress('179.26.203.196'));
     }
+
+    /**
+     * @test
+     */
+    public function itLogsWhenFailingToUpdateIpAddress()
+    {
+        $this->httpClient->method('request')
+            ->willThrowException(new RequestException(
+                'error',
+                $this->createRequest()
+            ));
+
+        $this->logger->expects($this->once())
+            ->method('warning')
+            ->with(
+                'Failing to update public IP address',
+                [
+                    'ip_address' => '179.26.203.196',
+                ]
+            );
+
+        $this->expectException(IpAddressUpdateFailed::class);
+
+        $this->updater->set(new IpAddress('179.26.203.196'));
+    }
 }
