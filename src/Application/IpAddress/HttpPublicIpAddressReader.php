@@ -45,6 +45,10 @@ final class HttpPublicIpAddressReader implements PublicIpAddressReader
                 $this->endpoint
             );
         } catch (RequestException $exception) {
+            $this->logger->warning(
+                'Failing to read public IP address'
+            );
+
             throw new IpAddressReadFailed();
         }
 
