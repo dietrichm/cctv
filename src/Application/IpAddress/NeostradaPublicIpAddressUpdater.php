@@ -68,6 +68,13 @@ final class NeostradaPublicIpAddressUpdater implements PublicIpAddressUpdater
                 ]
             );
         } catch (RequestException $exception) {
+            $this->logger->warning(
+                'Failing to update public IP address',
+                [
+                    'ip_address' => $ipAddress->getIpAddress(),
+                ]
+            );
+
             throw new IpAddressUpdateFailed();
         }
     }
