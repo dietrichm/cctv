@@ -23,11 +23,6 @@ final class HttpPublicIpAddressReaderTest extends TestCase
     private $httpClient;
 
     /**
-     * @var string
-     */
-    private $endpoint;
-
-    /**
      * @var HttpPublicIpAddressReader
      */
     private $reader;
@@ -41,12 +36,11 @@ final class HttpPublicIpAddressReaderTest extends TestCase
     {
         $this->httpClient = $this->createMock(Client::class);
         $this->logger = $this->createMock(LoggerInterface::class);
-        $this->endpoint = 'https://example.org';
 
         $this->reader = new HttpPublicIpAddressReader(
             $this->httpClient,
             $this->logger,
-            $this->endpoint
+            'https://example.org'
         );
     }
 
@@ -62,7 +56,7 @@ final class HttpPublicIpAddressReaderTest extends TestCase
             ->method('request')
             ->with(
                 'get',
-                $this->endpoint
+                'https://example.org'
             )
             ->willReturn($response);
 
