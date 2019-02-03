@@ -11,6 +11,7 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 final class NeostradaPublicIpAddressUpdaterTest extends TestCase
 {
@@ -26,12 +27,19 @@ final class NeostradaPublicIpAddressUpdaterTest extends TestCase
      */
     private $httpClient;
 
+    /**
+     * @var MockObject
+     */
+    private $logger;
+
     public function setUp()
     {
         $this->httpClient = $this->createMock(Client::class);
+        $this->logger = $this->createMock(LoggerInterface::class);
 
         $this->updater = new NeostradaPublicIpAddressUpdater(
             $this->httpClient,
+            $this->logger,
             'api-token',
             303,
             808

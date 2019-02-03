@@ -7,6 +7,7 @@ use Detroit\Cctv\Domain\IpAddress\IpAddressUpdateFailed;
 use Detroit\Cctv\Domain\IpAddress\PublicIpAddressUpdater;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Psr\Log\LoggerInterface;
 
 final class NeostradaPublicIpAddressUpdater implements PublicIpAddressUpdater
 {
@@ -14,6 +15,11 @@ final class NeostradaPublicIpAddressUpdater implements PublicIpAddressUpdater
      * @var Client
      */
     private $httpClient;
+
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
     /**
      * @var string
@@ -32,11 +38,13 @@ final class NeostradaPublicIpAddressUpdater implements PublicIpAddressUpdater
 
     public function __construct(
         Client $httpClient,
+        LoggerInterface $logger,
         string $apiToken,
         int $dnsId,
         int $recordId
     ) {
         $this->httpClient = $httpClient;
+        $this->logger = $logger;
         $this->apiToken = $apiToken;
         $this->dnsId = $dnsId;
         $this->recordId = $recordId;
