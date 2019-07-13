@@ -48,7 +48,7 @@ final class GetSnapshotRequestHandler
             $response = $this->httpClient->request(
                 'get',
                 (string) $camera->getSnapshotUri(),
-                ['timeout' => 2.0]
+                ['timeout' => 3.0]
             );
         } catch (RequestException $exception) {
             throw CameraUnavailable::withName($camera->getName());
