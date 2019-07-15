@@ -13,6 +13,11 @@ final class CameraBuilder
     private $name;
 
     /**
+     * @var int
+     */
+    private $requestTimeout;
+
+    /**
      * @var string
      */
     private $snapshotUri;
@@ -32,6 +37,7 @@ final class CameraBuilder
 
         $builder->name = 'foo';
         $builder->snapshotUri = 'https://example.org/snapshot';
+        $builder->requestTimeout = 2;
         $builder->rebootUri = 'https://example.org/reboot';
 
         return $builder;
@@ -69,7 +75,8 @@ final class CameraBuilder
     {
         $camera = new Camera(
             $this->name,
-            Uri::createFromString($this->snapshotUri)
+            Uri::createFromString($this->snapshotUri),
+            $this->requestTimeout
         );
 
         if ($this->rebootUri !== null) {

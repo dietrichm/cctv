@@ -17,16 +17,23 @@ final class Camera
     private $snapshotUri;
 
     /**
+     * @var int
+     */
+    private $requestTimeout;
+
+    /**
      * @var Uri|null
      */
     private $rebootUri;
 
     public function __construct(
         string $name,
-        Uri $snapshotUri
+        Uri $snapshotUri,
+        int $requestTimeout
     ) {
         $this->name = $name;
         $this->snapshotUri = $snapshotUri;
+        $this->requestTimeout = $requestTimeout;
     }
 
     public function getName(): string

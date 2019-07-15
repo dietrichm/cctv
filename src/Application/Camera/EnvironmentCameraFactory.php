@@ -34,7 +34,8 @@ class EnvironmentCameraFactory implements CameraFactory
 
         $camera = new Camera(
             $name,
-            Uri::createFromString($snapshotUri)
+            Uri::createFromString($snapshotUri),
+            2
         );
 
         if (!empty($rebootUri)) {
