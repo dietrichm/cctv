@@ -25,20 +25,24 @@ final class EnvironmentCameraFactoryTest extends TestCase
     {
         putenv('CAMERA_1_NAME=foo');
         putenv('CAMERA_1_SNAPSHOT_URI=https://via.placeholder.com/500');
+        putenv('CAMERA_1_REQUEST_TIMEOUT=5');
         putenv('CAMERA_1_REBOOT_URI');
         putenv('CAMERA_2_NAME=bar');
         putenv('CAMERA_2_SNAPSHOT_URI=https://via.placeholder.com/400');
+        putenv('CAMERA_2_REQUEST_TIMEOUT');
         putenv('CAMERA_2_REBOOT_URI');
         putenv('CAMERA_3_NAME');
 
         $expectedCameraOne = CameraBuilder::create()
             ->withName('foo')
             ->withSnapshotUri('https://via.placeholder.com/500')
+            ->withRequestTimeout(5)
             ->withoutRebootUri()
             ->build();
         $expectedCameraTwo = CameraBuilder::create()
             ->withName('bar')
             ->withSnapshotUri('https://via.placeholder.com/400')
+            ->withRequestTimeout(2)
             ->withoutRebootUri()
             ->build();
 
@@ -69,6 +73,7 @@ final class EnvironmentCameraFactoryTest extends TestCase
     {
         putenv('CAMERA_1_NAME=foo');
         putenv('CAMERA_1_SNAPSHOT_URI=https://via.placeholder.com/500');
+        putenv('CAMERA_1_REQUEST_TIMEOUT');
         putenv('CAMERA_1_REBOOT_URI=https://example.org/reboot1');
         putenv('CAMERA_2_NAME');
 

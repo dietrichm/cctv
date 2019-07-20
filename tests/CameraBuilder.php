@@ -57,6 +57,14 @@ final class CameraBuilder
         return $this;
     }
 
+    public function withRequestTimeout(int $requestTimeout): self
+    {
+        $clone = clone $this;
+        $clone->requestTimeout = $requestTimeout;
+
+        return $clone;
+    }
+
     public function withRebootUri(string $rebootUri): self
     {
         $this->rebootUri = $rebootUri;
