@@ -26,6 +26,7 @@ class EnvironmentCameraFactory implements CameraFactory
 
         $name = getenv($prefix . 'NAME');
         $snapshotUri = getenv($prefix . 'SNAPSHOT_URI');
+        $requestTimeout = getenv($prefix . 'REQUEST_TIMEOUT');
         $rebootUri = getenv($prefix . 'REBOOT_URI');
 
         if ($name === false || $snapshotUri === false) {
@@ -35,7 +36,9 @@ class EnvironmentCameraFactory implements CameraFactory
         $camera = new Camera(
             $name,
             Uri::createFromString($snapshotUri),
-            2
+            $requestTimeout !== false
+                ? (int) $requestTimeout
+                : 2
         );
 
         if (!empty($rebootUri)) {
