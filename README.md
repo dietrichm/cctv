@@ -12,6 +12,12 @@ Additionally, due to the nature of the quirky cameras and the fact the applicati
 
 ## Features
 
+* Show snapshot pictures of an arbitrary amount of CCTV cameras in a single row/column on a HTML page
+* Configure snapshot request time-out per camera
+* Reboot all cameras having a reboot trigger URL using a console command
+* Log application errors to a [Sentry](https://sentry.io) project
+* Maintain public IP address on a [Neostrada DNS record](https://help.neostrada.nl/) (**incomplete**)
+
 ## Installation
 
 ## Technical details
