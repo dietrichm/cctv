@@ -20,4 +20,15 @@ Additionally, due to the nature of the quirky cameras and the fact the applicati
 
 ## Installation
 
+Install the app by executing in the root of the repository:
+
+```
+make
+make vendor
+```
+
+A copy of `.env.example` will be installed as `.env`. The application can be configured by changing and adding environment variables in this file.
+
+When the Docker container is running, access the snapshots page at [http://localhost](http://localhost).
+
 ## Technical details
