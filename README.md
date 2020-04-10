@@ -47,7 +47,9 @@ __Note:__ after updating the environment variable file, a restart of the Docker 
 
 #### Neostrada IP address
 
-These are the environment variables for configuring the **incomplete** Neostrada IP address updater:
+This feature keeps a DNS record on Neostrada in sync with a dynamically allocated IP address. This is the case when hosting the service on a local computer, such as on a Raspberry Pi.
+
+Some parts of the domain code is present, but the (console) commands and cron job to trigger the sync is missing. Hence this feature is not functional. Anyway, the following environment variables are taken into account:
 
 * `NEOSTRADA_API_TOKEN`: API token.
 * `NEOSTRADA_DNS_ID`: ID of the DNS entry.
