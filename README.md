@@ -56,3 +56,13 @@ Some parts of the domain code is present, but the (console) commands and cron jo
 * `NEOSTRADA_RECORD_ID`: ID of the DNS record in the entry.
 
 ## Technical details
+
+Even though the goal of the project is relatively simple and the feature set is limited, the application was built using some industry best practices, including:
+
+* Test-driven development: unit and integration tests were written in tandem with the business/application code.
+* Domain-driven design: the codebase is layered with an infrastructural layer, a domain layer and an application layer. Business scenarios in the problem domain are implemented in the domain layer using commands and handlers, while the application layer implements repositories, factories, HTTP request handlers, etc.
+* Use of a micro framework ([Slim](https://www.slimframework.com/) 3) in combination with a dependency injection container ([The PHP League's Container](https://container.thephpleague.com/)), and generic dependencies [Guzzle](http://guzzlephp.org/), [Flysystem](https://flysystem.thephpleague.com/), [Twig](https://twig.symfony.com/), [Tactician](https://tactician.thephpleague.com/), etc.
+* Configuration through the environment, by defining environment variables.
+* Logging and maintaining errors and exceptions to/in an external Sentry project.
+
+The use case for this project has disappeared over time, so the code is not being maintained. If this was the case, I would probably replace Twig with a React based front-end in JavaScript or TypeScript.
