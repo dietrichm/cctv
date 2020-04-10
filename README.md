@@ -11,7 +11,7 @@ This project primarily provides a public HTML page offering such an overview of 
 ## Features
 
 * Show snapshot pictures of an arbitrary amount of CCTV cameras in a single row/column on a HTML page
-* Configure snapshot request time-out per camera
+* Configurable snapshot request time-out per camera
 * Reboot all cameras having a reboot trigger URL using a console command
 * Log application errors to a [Sentry](https://sentry.io) project
 * Maintain public IP address on a [Neostrada DNS record](https://help.neostrada.nl/) (**incomplete**)
@@ -41,7 +41,7 @@ The following environment variables can be defined in the `.env` file.
 * `CAMERA_x_REQUEST_TIMEOUT`: Request timeout value in seconds of camera `x` (_optional_).
 * `CAMERA_x_REBOOT_URI`: Reboot URI for triggering a reboot of camera `x` (_optional_).
 
-Multiple cameras are configured by defined variables with an increasing `x` index. Cameras have to be defined sequentially - an undefined name or snapshot URI variable finishes the configuration process.
+Multiple cameras are configured by defining variables with an increasing `x` index. Cameras have to be defined sequentially - an undefined name or snapshot URI variable finishes the configuration process.
 
 __Note:__ after updating the environment variable file, a restart of the Docker container may be necessary.
 
