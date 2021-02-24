@@ -2,6 +2,19 @@
 
 Web based snapshot viewer for rudimentary CCTV cameras.
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Goal of the project](#goal-of-the-project)
+- [Features](#features)
+- [Installation](#installation)
+  - [Configuration](#configuration)
+    - [Neostrada IP address](#neostrada-ip-address)
+- [Technical details](#technical-details)
+- [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Goal of the project
 
 Having a couple of cheap and pretty rudimentary CCTV cameras with awkward (and likely not very secure) web interfaces, we wanted some additional remotely accessible features such as the possibility of seeing a snapshot of all cameras at once.
