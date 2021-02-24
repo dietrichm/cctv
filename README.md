@@ -84,4 +84,4 @@ The use case for this project has disappeared over time, so the code is not bein
 
 Copyright 2015, Dietrich Moerman.
 
-Released under terms of the [GNU General Public License v3.0](LICENSE).
+Released under the terms of the [GNU General Public License v3.0](LICENSE).
