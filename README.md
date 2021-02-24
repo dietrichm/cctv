@@ -66,3 +66,9 @@ Even though the goal of the project is relatively simple and the feature set is 
 * Logging and maintaining errors and exceptions to/in an external Sentry project.
 
 The use case for this project has disappeared over time, so the code is not being maintained. If this was the case, I would probably replace Twig with a React based front-end in JavaScript or TypeScript.
+
+## License
+
+Copyright 2015, Dietrich Moerman.
+
+Released under terms of the [GNU General Public License v3.0](LICENSE).
