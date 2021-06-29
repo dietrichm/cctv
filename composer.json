@@ -1,4 +1,7 @@
 {
+    "name": "dietrichm/cctv",
+    "description": "Web based snapshot viewer for rudimentary CCTV cameras, designed and built with DDD and TDD using Slim 3.",
+    "license": "GPL-3.0-or-later",
     "require": {
         "php": "^7.3",
         "league/container": "^3.2",
